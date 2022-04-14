@@ -23,11 +23,14 @@ export default class BuscarBar extends React.Component {
           platform="ios"
           // containerStyle={{
           //   backgroundColor: "white",
-          //   borderColor: "white",
+          // }}
+          // onChange={{
+          //   borderColor: "#bbb",
           // }}
           // inputContainerStyle={{
           //   backgroundColor: "#eee",
           //   borderRadius: 21,
+          //   borderColor: "#eee",
           // }}
         />
       </View>
