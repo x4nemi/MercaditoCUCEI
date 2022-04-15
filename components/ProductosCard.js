@@ -10,7 +10,7 @@ const productos = [
     titulo: "Gomitas",
     price: "25.00",
     descripcion:
-      "Vendo gomitas de distintos sabores, como fresa, mango, chilito...",
+      "Vendo gomitas de distintos sabores, como fresa, mango, chilito... también de klfjflksdjfl dkfljsdfldsnl y kjklvjdklsfjsdlkljflfkdjflksdjfklsdjkfldsjklfdsjkslf",
     diponible: true,
   },
   {
@@ -48,24 +48,35 @@ export default function ProductosCard() {
       <ScrollView>
         {productos.map((producto, index) => (
           <View key={index}>
-            <View style={{ flexDirection: "row", padding: 20 }}>
+            <View style={{ flexDirection: "row", padding: 20, flex: 1 }}>
               <Image
                 source={producto.image}
                 style={{
-                  width: 90,
-                  height: 90,
-                  borderRadius: 30,
+                  width: 60,
+                  height: 60,
+                  borderRadius: 10,
                 }}
               />
-              <View style={{ flexDirection: "column" }}>
-                <View style={{ flexDirection: "row" }}>
-                  <Text style={{ padding: 3, fontSize: 10, fontWeight: "700" }}>
+              <View style={{ flexDirection: "column", flex: 1 }}>
+                <View
+                  style={{
+                    flexDirection: "row",
+                    alignItems: "baseline",
+                  }}
+                >
+                  <Text
+                    style={{
+                      paddingHorizontal: 6,
+                      fontSize: 14,
+                      textTransform: "uppercase",
+                    }}
+                  >
                     {producto.titulo}
                   </Text>
-                  <View style={{ paddingHorizontal: 3 }}>
+                  <View style={boxes.container}>
                     <Text style={boxes.price}>${producto.price}</Text>
                   </View>
-                  <View style={{ paddingHorizontal: 3 }}>
+                  <View style={boxes.container}>
                     <Text style={boxes.disponibility}>
                       {producto.diponible == true ? "Disponible" : "Agotado"}
                     </Text>
@@ -73,8 +84,9 @@ export default function ProductosCard() {
                 </View>
                 <View
                   style={{
-                    width: 200,
                     paddingHorizontal: 6,
+                    flex: 1,
+                    flexDirection: "row",
                   }}
                 >
                   <Text style={boxes.description}>{producto.descripcion}</Text>
@@ -92,21 +104,22 @@ export default function ProductosCard() {
 
 const boxes = StyleSheet.create({
   container: {
-    padding: 20,
+    paddingHorizontal: 5,
   },
   price: {
-    fontSize: 8,
+    fontSize: 12,
     color: "white",
     backgroundColor: "black",
     borderRadius: 30,
-    padding: 5,
+    paddingHorizontal: 5,
+    alignSelf: "baseline",
   },
   disponibility: {
-    fontSize: 8,
+    fontSize: 12,
     color: "white",
     backgroundColor: "#bdbcde",
     borderRadius: 30,
-    padding: 5,
+    paddingHorizontal: 5,
   },
   description: {
     fontSize: 9,
