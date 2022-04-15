@@ -1,13 +1,14 @@
-import { View, Text, SafeAreaView } from "react-native";
+import { View, Text, SafeAreaView, ScrollView } from "react-native";
 import React from "react";
 import HeaderTabs from "../components/HeaderTabs";
 import BuscarBar from "../components/SearchBar";
 import Categories from "../components/Categories";
-import { ScrollView } from "react-native-web";
-import ProductosItems from "../components/ProductosItems";
-import ProductosCard from "../components/ProductosCard";
+import ProductosCard, {
+  productosInventados,
+} from "../components/ProductosCard";
 
 export default function Home() {
+  const [productosData, setProductoData] = React.useState(productosInventados);
   return (
     <SafeAreaView style={{ backgroundColor: "#eee", flex: 1 }}>
       <View style={{ backgroundColor: "white", padding: 15 }}>
@@ -16,7 +17,7 @@ export default function Home() {
       </View>
       <ScrollView showsVerticalScrollIndicator={false}>
         <Categories />
-        <ProductosCard />
+        <ProductosCard productoData={productosData} />
       </ScrollView>
     </SafeAreaView>
   );
