@@ -7,63 +7,14 @@ import {
   TouchableOpacity,
   TextInput,
   Button,
-  Alert,
 } from "react-native";
-import Home from "./screens/Home";
+import React from "react";
 import { BlurView } from "expo-blur";
-
-//Firebase
-import {
-  getAuth,
-  createUserWithEmailAndPassword,
-  signInWithEmailAndPassword,
-} from "firebase/auth";
-import { initializeApp } from "firebase/app";
-import { firebaseConfig } from "./firebase-config";
-import CuentaScreen from "./screens/CuentaScreen";
 
 const wallpaper =
   "https://cdn.ipadizate.com/2020/08/iOS-14-promotional-gradients-iphone-wallpaper-ar72014-idownloadblog-1.jpeg";
 
-const uri_profile =
-  "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c3/Python-logo-notext.svg/1024px-Python-logo-notext.svg.png";
-
-function HomeScreen() {
-  return <Home />;
-}
-
-function LoginScreen() {
-  const [email, setEmail] = React.useState("");
-  const [password, setPassword] = React.useState("");
-
-  const app = initializeApp(firebaseConfig);
-  const auth = getAuth(app);
-
-  const handleCreateAccount = () => {
-    createUserWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
-        console.log("Se ha creado la cuenta (-:");
-        const user = userCredential.user;
-        console.log(user);
-      })
-      .catch((error) => {
-        console.log(error);
-        //Alert.alert(error.message);
-      });
-  };
-
-  const handleSignIn = () => {
-    signInWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
-        console.log("Se ha creado la cuenta (-:");
-        const user = userCredential.user;
-        console.log(user);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
-
+export default function CuentaScreen() {
   return (
     <View style={styles.container}>
       <Image
@@ -86,30 +37,24 @@ function LoginScreen() {
               <Text style={{ fontSize: 17, fontWeight: "400", color: "white" }}>
                 E-mail
               </Text>
-              <TextInput
-                onChangeText={(text) => setEmail(text)}
-                style={styles.input}
-                placeholder="nombre@correo.com"
-              />
+              <TextInput style={styles.input} placeholder="nombre@correo.com" />
             </View>
             <View>
               <Text style={{ fontSize: 17, fontWeight: "400", color: "white" }}>
                 Contraseña
               </Text>
               <TextInput
-                onChangeText={(text) => setPassword(text)}
                 style={styles.input}
                 placeholder="contraseña"
                 secureTextEntry={true}
               />
             </View>
-            <TouchableOpacity onPress={handleSignIn} style={styles.button}>
+            <TouchableOpacity style={styles.button}>
               <Text style={{ fontSize: 17, fontWeight: "400", color: "white" }}>
                 Entrar
               </Text>
             </TouchableOpacity>
             <TouchableOpacity
-              onPress={handleCreateAccount}
               style={[styles.button, { backgroundColor: "#6792F090" }]}
             >
               <Text style={{ fontSize: 17, fontWeight: "400", color: "white" }}>
@@ -121,10 +66,6 @@ function LoginScreen() {
       </ScrollView>
     </View>
   );
-}
-
-export default function App() {
-  return <LoginScreen />;
 }
 
 const styles = StyleSheet.create({
