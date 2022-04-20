@@ -11,6 +11,7 @@ import {
 } from "react-native";
 import Home from "./screens/Home";
 import { BlurView } from "expo-blur";
+import CuentaScreen from "./screens/CuentaScreen";
 
 //Firebase
 import {
@@ -20,7 +21,6 @@ import {
 } from "firebase/auth";
 import { initializeApp } from "firebase/app";
 import { firebaseConfig } from "./firebase-config";
-import CuentaScreen from "./screens/CuentaScreen";
 
 const wallpaper =
   "https://cdn.ipadizate.com/2020/08/iOS-14-promotional-gradients-iphone-wallpaper-ar72014-idownloadblog-1.jpeg";
@@ -124,7 +124,7 @@ function LoginScreen() {
 }
 
 export default function App() {
-  return <LoginScreen />;
+  return <CuentaScreen />;
 }
 
 const styles = StyleSheet.create({

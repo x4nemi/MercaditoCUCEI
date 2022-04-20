@@ -11,10 +11,49 @@ import {
 import React from "react";
 import { BlurView } from "expo-blur";
 
+import {
+  getAuth,
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+} from "firebase/auth";
+import { initializeApp } from "firebase/app";
+import { firebaseConfig } from "../firebase-config";
+
 const wallpaper =
   "https://cdn.ipadizate.com/2020/08/iOS-14-promotional-gradients-iphone-wallpaper-ar72014-idownloadblog-1.jpeg";
 
 export default function CuentaScreen() {
+  const [email, setEmail] = React.useState("");
+  const [password, setPassword] = React.useState("");
+
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+
+  const handleCreateAccount = () => {
+    createUserWithEmailAndPassword(auth, email, password)
+      .then((userCredential) => {
+        console.log("Se ha creado la cuenta (-:");
+        const user = userCredential.user;
+        console.log(user);
+      })
+      .catch((error) => {
+        console.log(error);
+        Alert.alert(error.message);
+      });
+  };
+
+  const handleSignIn = () => {
+    signInWithEmailAndPassword(auth, email, password)
+      .then((userCredential) => {
+        console.log("Se ha creado la cuenta (-:");
+        const user = userCredential.user;
+        console.log(user);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
   return (
     <View style={styles.container}>
       <Image
@@ -37,24 +76,30 @@ export default function CuentaScreen() {
               <Text style={{ fontSize: 17, fontWeight: "400", color: "white" }}>
                 E-mail
               </Text>
-              <TextInput style={styles.input} placeholder="nombre@correo.com" />
+              <TextInput
+                onChangeText={(text) => setEmail(text)}
+                style={styles.input}
+                placeholder="nombre@correo.com"
+              />
             </View>
             <View>
               <Text style={{ fontSize: 17, fontWeight: "400", color: "white" }}>
                 Contraseña
               </Text>
               <TextInput
+                onChangeText={(text) => setPassword(text)}
                 style={styles.input}
                 placeholder="contraseña"
                 secureTextEntry={true}
               />
             </View>
-            <TouchableOpacity style={styles.button}>
+            <TouchableOpacity onPress={handleSignIn} style={styles.button}>
               <Text style={{ fontSize: 17, fontWeight: "400", color: "white" }}>
                 Entrar
               </Text>
             </TouchableOpacity>
             <TouchableOpacity
+              onPress={handleCreateAccount}
               style={[styles.button, { backgroundColor: "#6792F090" }]}
             >
               <Text style={{ fontSize: 17, fontWeight: "400", color: "white" }}>
