@@ -124,7 +124,7 @@ function LoginScreen() {
 }
 
 export default function App() {
-  return <CuentaScreen />;
+  return <Home/>;
 }
 
 const styles = StyleSheet.create({
