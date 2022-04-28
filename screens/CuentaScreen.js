@@ -19,12 +19,17 @@ import {
 import { initializeApp } from "firebase/app";
 import { firebaseConfig } from "../firebase-config";
 
+import { useNavigation } from "@react-navigation/native";
+
+import { Root } from "../App";
+
 const wallpaper =
   "https://cdn.ipadizate.com/2020/08/iOS-14-promotional-gradients-iphone-wallpaper-ar72014-idownloadblog-1.jpeg";
 
 export default function CuentaScreen() {
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
+  const navigation = useNavigation();
 
   const app = initializeApp(firebaseConfig);
   const auth = getAuth(app);
@@ -48,6 +53,7 @@ export default function CuentaScreen() {
         console.log("Se ha creado la cuenta (-:");
         const user = userCredential.user;
         console.log(user);
+        navigation.navigate("Root", { screen: "Home" });
       })
       .catch((error) => {
         console.log(error);
