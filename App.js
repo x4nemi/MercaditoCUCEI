@@ -11,6 +11,7 @@ import {
 } from "react-native";
 import Home from "./screens/Home";
 import CuentaScreen from "./screens/CuentaScreen";
+import CRUDScreen from "./screens/CRUDScreen";
 
 import { NavigationContainer, StackActions } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
@@ -34,7 +35,7 @@ export function Root() {
 export default function App() {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Login">
+      <Stack.Navigator initialRouteName="Creación del Producto">
         <Stack.Screen
           name="Root"
           component={Root}
@@ -45,6 +46,7 @@ export default function App() {
           component={CuentaScreen}
           options={{ headerShown: false }}
         />
+        <Stack.Screen name="Creación del Producto" component={CRUDScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );
