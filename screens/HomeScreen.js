@@ -1,12 +1,10 @@
 import { View, Text, SafeAreaView, ScrollView, FlatList } from "react-native";
 import React from "react";
-import HeaderTabs from "../components/HeaderTabs";
 import BuscarBar from "../components/SearchBar";
 import Categories from "../components/Categories";
-import {
-  productosInventados,
-} from "../components/ProductosCard";
+import { productosInventados} from "../components/ProductosCard";
 import ProductoCard from "../components/ProductoCard";
+import NavBar from "../components/NavBar";
 
 export default function Home() {
   const [productosData, setProductoData] = React.useState(productosInventados);
@@ -41,6 +39,7 @@ export default function Home() {
           extraData={selectedId}
         />
       </ScrollView>
+      <NavBar/>
     </SafeAreaView>
   );
 }

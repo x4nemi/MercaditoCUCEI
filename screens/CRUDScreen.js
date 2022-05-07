@@ -14,6 +14,8 @@ import {
 import React, { useState } from "react";
 import ProductosCard from "../components/ProductosCard";
 
+//HACER DE ESTA PANTALLA UN POPUP
+
 export default function CRUDScreen() {
   //Input para nombre
   const [productName, setName] = useState("");

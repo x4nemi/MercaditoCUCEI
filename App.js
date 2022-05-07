@@ -9,50 +9,46 @@ import {
   Button,
   Alert,
 } from "react-native";
-import Home from "./screens/Home";
+
+//Screens
+import HomeScreen from "./screens/HomeScreen";
 import CuentaScreen from "./screens/CuentaScreen";
 import CRUDScreen from "./screens/CRUDScreen";
+import StoreScreen from "./screens/StoreScreen";
 
+//Navigation
 import { NavigationContainer, StackActions } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { useNavigation } from "@react-navigation/native";
-import Store from "./screens/Store";
+import NavBar from "./components/NavBar";
 
+//Navigation Creation
 const Stack = createNativeStackNavigator();
 const Drawer = createNativeStackNavigator();
+const Tab = createNativeStackNavigator();
 
-export function Root() {
-  return (
-    <Drawer.Navigator>
-      <Drawer.Screen
-        name="Home"
-        component={Home}
-        options={{ headerShown: false }}
-      />
-    </Drawer.Navigator>
-  );
-}
 
 export default function App() {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Creación del Producto">
+      <Stack.Navigator initialRouteName="Login">
         <Stack.Screen
-          name="Root"
-          component={Root}
+          name="Home"
+          component={HomeScreen}
           options={{ headerShown: false }}
         />
+        <Stack.Screen
+          name="Tienda"
+          component={StoreScreen}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen name="Creación del Producto" component={CRUDScreen} />
+        <Stack.Screen name="NavBar" component={NavBar} />
         <Stack.Screen
           name="Login"
           component={CuentaScreen}
           options={{ headerShown: false }}
         />
-        <Stack.Screen
-          name="Tienda"
-          component={Store}
-          options={{ headerShown: false }}
-        />
-        <Stack.Screen name="Creación del Producto" component={CRUDScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );

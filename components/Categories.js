@@ -5,11 +5,11 @@ import { ScrollView } from "react-native-web";
 
 const items = [
   {
-    image: require("../assets/healthy-food.png"),
+    image: require("../assets/healthy_food.png"),
     text: "Comida",
   },
   {
-    image: require("../assets/magic-box.png"),
+    image: require("../assets/magic_box.png"),
     text: "Miscelanea",
   },
   {

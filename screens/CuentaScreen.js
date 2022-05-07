@@ -11,6 +11,7 @@ import {
 import React from "react";
 import { BlurView } from "expo-blur";
 
+//FireBase
 import {
   getAuth,
   createUserWithEmailAndPassword,
@@ -19,27 +20,33 @@ import {
 import { initializeApp } from "firebase/app";
 import { firebaseConfig } from "../firebase-config";
 
+//Navigation
 import { useNavigation } from "@react-navigation/native";
 
-import { Root } from "../App";
 
 const wallpaper =
   "https://cdn.ipadizate.com/2020/08/iOS-14-promotional-gradients-iphone-wallpaper-ar72014-idownloadblog-1.jpeg";
 
 export default function CuentaScreen() {
+  //States
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
+
+  //Navigation
   const navigation = useNavigation();
 
+  //FireBase Config
   const app = initializeApp(firebaseConfig);
   const auth = getAuth(app);
 
+  //Sign Up
   const handleCreateAccount = () => {
     createUserWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         console.log("Se ha creado la cuenta (-:");
         const user = userCredential.user;
         console.log(user);
+        navigation.navigate("Home");
       })
       .catch((error) => {
         console.log(error);
@@ -47,19 +54,21 @@ export default function CuentaScreen() {
       });
   };
 
+  //Sign In
   const handleSignIn = () => {
     signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         console.log("Se ha creado la cuenta (-:");
         const user = userCredential.user;
         console.log(user);
-        navigation.navigate("Root", { screen: "Home" });
+        navigation.navigate("Home");
       })
       .catch((error) => {
         console.log(error);
       });
   };
 
+  //CuentaScreen 
   return (
     <View style={styles.container}>
       <Image
@@ -119,6 +128,7 @@ export default function CuentaScreen() {
   );
 }
 
+//Styles Login Screen
 const styles = StyleSheet.create({
   container: {
     flex: 1,

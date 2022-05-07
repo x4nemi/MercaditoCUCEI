@@ -4,6 +4,7 @@ import { StatusBar } from "react-native-web";
 import BuscarBar from "../components/SearchBar";
 import { productosInventados } from "../components/ProductosCard";
 import ProductoCard from "../components/ProductoCard";
+import NavBar from "../components/NavBar";
 
 const Store = () =>{
   const [productosData, setProductoData] = React.useState(productosInventados);
@@ -42,12 +43,9 @@ const Store = () =>{
       </ScrollView>
       </View>
       {/* NavBar */}
+      <NavBar/>
     </SafeAreaView>
   );
-}
-
-Store.defaultProps = {
-  title:"Dashboard",
 }
 
 const styles = StyleSheet.create({
