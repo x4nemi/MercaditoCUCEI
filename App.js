@@ -16,6 +16,7 @@ import CRUDScreen from "./screens/CRUDScreen";
 import { NavigationContainer, StackActions } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { useNavigation } from "@react-navigation/native";
+import Store from "./screens/Store";
 
 const Stack = createNativeStackNavigator();
 const Drawer = createNativeStackNavigator();
@@ -44,6 +45,11 @@ export default function App() {
         <Stack.Screen
           name="Login"
           component={CuentaScreen}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="Tienda"
+          component={Store}
           options={{ headerShown: false }}
         />
         <Stack.Screen name="Creación del Producto" component={CRUDScreen} />

@@ -5,6 +5,7 @@ import MaterialCommunityIcons from "react-native-vector-icons/Ionicons";
 
 export const productosInventados = [
   {
+    id:1,
     image:
       "https://www.hola.com/imagenes/mascotas/20220228205371/medusas-como-mascotas-en-casa-dn/1-56-52/medusas-como-mascotas-en-casa-t.jpg",
     titulo: "Gomitas",
@@ -14,6 +15,7 @@ export const productosInventados = [
     disponible: true,
   },
   {
+    id:2,
     image:
       "https://www.hola.com/imagenes/mascotas/20220228205371/medusas-como-mascotas-en-casa-dn/1-56-52/medusas-como-mascotas-en-casa-t.jpg",
     titulo: "Gomitas",
@@ -23,6 +25,7 @@ export const productosInventados = [
     disponible: true,
   },
   {
+    id:3,
     image:
       "https://www.hola.com/imagenes/mascotas/20220228205371/medusas-como-mascotas-en-casa-dn/1-56-52/medusas-como-mascotas-en-casa-t.jpg",
     titulo: "Gomitas",
@@ -32,6 +35,7 @@ export const productosInventados = [
     disponible: true,
   },
   {
+    id:4,
     image:
       "https://www.hola.com/imagenes/mascotas/20220228205371/medusas-como-mascotas-en-casa-dn/1-56-52/medusas-como-mascotas-en-casa-t.jpg",
     titulo: "Gomitas",
@@ -41,6 +45,7 @@ export const productosInventados = [
     disponible: false,
   },
   {
+    id:5,
     image:
       "https://www.hola.com/imagenes/mascotas/20220228205371/medusas-como-mascotas-en-casa-dn/1-56-52/medusas-como-mascotas-en-casa-t.jpg",
     titulo: "Gomitas",
@@ -50,6 +55,7 @@ export const productosInventados = [
     disponible: false,
   },
   {
+    id:6,
     image:
       "https://www.hola.com/imagenes/mascotas/20220228205371/medusas-como-mascotas-en-casa-dn/1-56-52/medusas-como-mascotas-en-casa-t.jpg",
     titulo: "Gomitas",
@@ -59,6 +65,7 @@ export const productosInventados = [
     disponible: false,
   },
   {
+    id:7,
     image:
       "https://www.hola.com/imagenes/mascotas/20220228205371/medusas-como-mascotas-en-casa-dn/1-56-52/medusas-como-mascotas-en-casa-t.jpg",
     titulo: "Gomitas",
@@ -68,6 +75,7 @@ export const productosInventados = [
     disponible: false,
   },
   {
+    id:8,
     image:
       "https://www.hola.com/imagenes/mascotas/20220228205371/medusas-como-mascotas-en-casa-dn/1-56-52/medusas-como-mascotas-en-casa-t.jpg",
     titulo: "Gomitas",
@@ -77,6 +85,7 @@ export const productosInventados = [
     disponible: false,
   },
   {
+    id:9,
     image:
       "https://www.hola.com/imagenes/mascotas/20220228205371/medusas-como-mascotas-en-casa-dn/1-56-52/medusas-como-mascotas-en-casa-t.jpg",
     titulo: "Gomitas",
@@ -86,6 +95,7 @@ export const productosInventados = [
     disponible: false,
   },
   {
+    id:10,
     image:
       "https://www.hola.com/imagenes/mascotas/20220228205371/medusas-como-mascotas-en-casa-dn/1-56-52/medusas-como-mascotas-en-casa-t.jpg",
     titulo: "Gomitas",

@@ -1,25 +1,19 @@
 import { View, Text, Image, StyleSheet, TouchableOpacity } from "react-native";
 import MaterialCommunityIcons from "react-native-vector-icons/Ionicons";
+import React from "react";
 
-const ProductoCard = (props) => {
+const ProductoCard = ({ item, onPress, backgroundColor }) => {
   return (
     <View style={boxes.main}>
       {/*Card*/}
-      <TouchableOpacity activeOpacity={1}>
+      <TouchableOpacity activeOpacity={1}  onPress={onPress}>
         <View
-          style={{
-            backgroundColor: "white",
-            padding: 10,
-            borderColor: "white",
-            borderTopColor: "#eee",
-            borderWidth: 1, 
-            borderRadius:10,
-          }}
+          style={[boxes.container, backgroundColor]}
         >
           {/*Card Info*/}
           <View style={{ flexDirection: "row", flex: 1 }}>
             {/*Imagen*/}
-            <Image source={props.item.image}
+            <Image source={item.image}
               style={boxes.image}
             />
             {/*Info del Producto */}
@@ -27,14 +21,14 @@ const ProductoCard = (props) => {
               {/*Iconos e Info */}
               <View style={{flexDirection: "row",alignItems: "baseline"}}>
                 <Text style={{paddingHorizontal: 6, fontSize: 14, textTransform: "uppercase",}}>
-                  {props.item.titulo}
+                  {item.titulo}
                 </Text>
                 <View style={{paddingHorizontal:5}}>
-                  <Text style={boxes.price}>${props.item.price}</Text>
+                  <Text style={boxes.price}>${item.price}</Text>
                 </View>
                 <View style={{paddingHorizontal:5}}>
                   <Text style={boxes.disponibility}>
-                    {props.item.disponible == true ? "Disponible" : "Agotado"}
+                    {item.disponible == true ? "Disponible" : "Agotado"}
                   </Text>
                 </View>
                 <View style={{paddingHorizontal:5}}>
@@ -51,7 +45,7 @@ const ProductoCard = (props) => {
               </View>
               {/*Descripción del Producto */}
               <View style={boxes.description}>
-                <Text style={{fontSize: 9, color: "grey",}}>{props.item.descripcion}</Text>
+                <Text style={{fontSize: 9, color: "grey",}}>{item.descripcion}</Text>
               </View>
             </View>
           </View>
@@ -68,6 +62,14 @@ const boxes = StyleSheet.create({
     borderBottomWidth: 2, 
     borderColor: '#f8f8f8',
     minWidth: "50%",
+  },
+  container:{
+    backgroundColor: "white",
+    padding: 10,
+    borderColor: "white",
+    borderTopColor: "#eee",
+    borderWidth: 1, 
+    borderRadius:10,
   },
   price: {
     fontSize: 12,
