@@ -15,7 +15,7 @@ const NavBar = () => {
     <View style={styles.container}>
       <MaterialCommunityIcons name="home-outline" size={30}
         onPress={() => {
-          navigation.push("Home");
+          navigation.navigate("Home");
         }}
       />
       <MaterialCommunityIcons name="chatbubble-outline" size={30}
@@ -25,12 +25,12 @@ const NavBar = () => {
       />
       <MaterialCommunityIcons name="briefcase-outline" size={30}
         onPress={() => {
-          navigation.push("Tienda");
+          navigation.navigate("Tienda");
         }}
       />
       <MaterialCommunityIcons name="person-circle-outline" size={30}
         onPress={() => {
-          navigation.push("Login")}}
+          navigation.navigate("Login")}}
       />
     </View>
   );

@@ -64,6 +64,7 @@ export default function CuentaScreen() {
         navigation.navigate("Home");
       })
       .catch((error) => {
+        alert(error)
         console.log(error);
       });
   };
