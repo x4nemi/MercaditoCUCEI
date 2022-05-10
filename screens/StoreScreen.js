@@ -32,15 +32,13 @@ const Store = () =>{
       <View style={{marginBottom:30}}>
       </View>
       {/*Card List*/}
-      <View >
-      <ScrollView showsVerticalScrollIndicator={false} style={{backgroundColor: "#eee"}}>
+      <View showsVerticalScrollIndicator={false} style={{backgroundColor: "#eee"}}>
         <FlatList
           data={productosData}
           renderItem={renderCard}
           keyExtractor={(item) => item.id}
           extraData={selectedId}
         />
-      </ScrollView>
       </View>
       {/* NavBar */}
       <NavBar/>

@@ -31,7 +31,7 @@ const Tab = createNativeStackNavigator();
 export default function App() {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Login">
+      <Stack.Navigator initialRouteName="Tienda">
         <Stack.Screen
           name="Home"
           component={HomeScreen}
@@ -43,7 +43,6 @@ export default function App() {
           options={{ headerShown: false }}
         />
         <Stack.Screen name="Creación del Producto" component={CRUDScreen} />
-        <Stack.Screen name="NavBar" component={NavBar} />
         <Stack.Screen
           name="Login"
           component={CuentaScreen}

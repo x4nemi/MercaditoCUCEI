@@ -61,7 +61,7 @@ export default function CuentaScreen() {
         console.log("Se ha creado la cuenta (-:");
         const user = userCredential.user;
         console.log(user);
-        navigation.navigate("Home");
+        navigation.navigate("Tienda");
       })
       .catch((error) => {
         alert(error)

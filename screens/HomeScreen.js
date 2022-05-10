@@ -30,7 +30,8 @@ export default function Home() {
         {/* <HeaderTabs /> */}
         <BuscarBar />
       </View>
-      <ScrollView showsVerticalScrollIndicator={false} style={{backgroundColor: "#eee"}}>
+      {/*Listas no deben estar denro de un scroll view */}
+      <View showsVerticalScrollIndicator={false} style={{backgroundColor: "#eee"}}>
         <Categories />
         <FlatList
           data={productosData}
@@ -38,7 +39,7 @@ export default function Home() {
           keyExtractor={(item) => item.id}
           extraData={selectedId}
         />
-      </ScrollView>
+      </View>
       <NavBar/>
     </SafeAreaView>
   );
