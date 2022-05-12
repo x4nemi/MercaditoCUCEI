@@ -12,11 +12,10 @@ import {
   Picker,
 } from "react-native";
 import React, { useState } from "react";
-import ProductosCard from "../components/ProductosCard";
 
 //HACER DE ESTA PANTALLA UN POPUP
 
-export default function CRUDScreen() {
+export default function CRUDScreen({ navigation }) {
   //Input para nombre
   const [productName, setName] = useState("");
 

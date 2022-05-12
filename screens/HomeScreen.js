@@ -1,12 +1,13 @@
+//Si posición es fixed, se requiere react-native-web
+//Ver como hacerle para que la navbar se coloque bien
 import { View, Text, SafeAreaView, ScrollView, FlatList } from "react-native";
 import React from "react";
 import BuscarBar from "../components/SearchBar";
 import Categories from "../components/Categories";
 import { productosInventados} from "../components/ProductosCard";
 import ProductoCard from "../components/ProductoCard";
-import NavBar from "../components/NavBar";
 
-export default function Home() {
+export default function Home({ navigation }) {
   const [productosData, setProductoData] = React.useState(productosInventados);
   const [selectedId, setSelectedId] = React.useState(null);
 
@@ -25,7 +26,7 @@ export default function Home() {
 
   //Render Home
   return (
-    <SafeAreaView style={{ backgroundColor: "#eee", flex: 1 }}>
+    <View style={{ backgroundColor: "#eee", flex: 1 }}>
       <View style={{ backgroundColor: "white", padding: 15 }}>
         {/* <HeaderTabs /> */}
         <BuscarBar />
@@ -40,7 +41,6 @@ export default function Home() {
           extraData={selectedId}
         />
       </View>
-      <NavBar/>
-    </SafeAreaView>
+    </View>
   );
 }

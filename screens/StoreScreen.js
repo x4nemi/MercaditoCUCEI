@@ -1,12 +1,18 @@
-import { View, StyleSheet, SafeAreaView, Text, FlatList, ScrollView} from "react-native";
+import {
+  View,
+  StyleSheet,
+  SafeAreaView,
+  Text,
+  FlatList,
+  ScrollView,
+  StatusBar,
+} from "react-native";
 import React from "react";
-import { StatusBar } from "react-native-web";
 import BuscarBar from "../components/SearchBar";
 import { productosInventados } from "../components/ProductosCard";
 import ProductoCard from "../components/ProductoCard";
-import NavBar from "../components/NavBar";
 
-const Store = () =>{
+const Store = ({ navigation }) => {
   const [productosData, setProductoData] = React.useState(productosInventados);
   const [selectedId, setSelectedId] = React.useState(null);
 
@@ -29,10 +35,12 @@ const Store = () =>{
         <BuscarBar />
       </View>
       {/*Botones Añadir y Eliminar*/}
-      <View style={{marginBottom:30}}>
-      </View>
+      <View style={{ marginBottom: 30 }}></View>
       {/*Card List*/}
-      <View showsVerticalScrollIndicator={false} style={{backgroundColor: "#eee"}}>
+      <View
+        showsVerticalScrollIndicator={false}
+        style={{ backgroundColor: "#eee" }}
+      >
         <FlatList
           data={productosData}
           renderItem={renderCard}
@@ -41,21 +49,19 @@ const Store = () =>{
         />
       </View>
       {/* NavBar */}
-      <NavBar/>
     </SafeAreaView>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "#eee", 
+    backgroundColor: "#eee",
     flex: 1,
     marginTop: StatusBar.currentHeight || 0,
   },
   header: {
     flexDirection: "row",
-    width:"100%",
-    
+    width: "100%",
   },
 });
 
