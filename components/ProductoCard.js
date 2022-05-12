@@ -1,4 +1,4 @@
-import { View, Text, Image, StyleSheet, TouchableOpacity } from "react-native";
+import { View, Text, Image, StyleSheet, TouchableOpacity, Platform } from "react-native";
 import MaterialCommunityIcons from "react-native-vector-icons/Ionicons";
 import React from "react";
 
@@ -13,7 +13,7 @@ const ProductoCard = ({ item, onPress, backgroundColor }) => {
           {/*Card Info*/}
           <View style={{ flexDirection: "row", flex: 1 }}>
             {/*Imagen*/}
-            <Image source={item.image}
+            <Image source={{uri:item.image}}
               style={boxes.image}
             />
             {/*Info del Producto */}
@@ -61,7 +61,7 @@ const boxes = StyleSheet.create({
     alignSelf: "center", 
     borderBottomWidth: 2, 
     borderColor: '#f8f8f8',
-    minWidth: "50%",
+    width: Platform.OS == "web" ? "70%" :"90%"
   },
   container:{
     backgroundColor: "white",

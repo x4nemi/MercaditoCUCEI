@@ -47,10 +47,9 @@ function Panels ({navigation}){
         },
       })}
       tabBarOptions={{
-        
         activeTintColor: '#22d3ee',
         inactiveTintColor: '#6b7280',
-        labelStyle: { paddingBottom: 10, fontSize: 0 },
+        labelStyle: {fontSize: 10 },
         style: { padding: 10, height: 70}
       }}>
 

@@ -16,10 +16,12 @@ const Store = ({ navigation }) => {
   const [productosData, setProductoData] = React.useState(productosInventados);
   const [selectedId, setSelectedId] = React.useState(null);
 
+  
   //Render Card(Cambiar onPress a Editar Producto)
   const renderCard = ({ item }) => {
     const backgroundColor = item.id === selectedId ? "#d1d5db" : "white";
-
+    console.log(item)
+    console.log("\n")
     return (
       <ProductoCard
         item={item}
