@@ -20,8 +20,6 @@ const Store = ({ navigation }) => {
   //Render Card(Cambiar onPress a Editar Producto)
   const renderCard = ({ item }) => {
     const backgroundColor = item.id === selectedId ? "#d1d5db" : "white";
-    console.log(item)
-    console.log("\n")
     return (
       <ProductoCard
         item={item}

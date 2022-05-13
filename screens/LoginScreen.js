@@ -23,11 +23,10 @@ import { firebaseConfig } from "../firebase-config";
 //Navigation
 import { useNavigation } from "@react-navigation/native";
 
-
 const wallpaper =
   "https://cdn.ipadizate.com/2020/08/iOS-14-promotional-gradients-iphone-wallpaper-ar72014-idownloadblog-1.jpeg";
 
-export default function CuentaScreen() {
+export default function LoginScreen() {
   //States
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
@@ -64,12 +63,12 @@ export default function CuentaScreen() {
         navigation.navigate("Panels");
       })
       .catch((error) => {
-        alert(error)
+        alert(error);
         console.log(error);
       });
   };
 
-  //CuentaScreen 
+  //CuentaScreen
   return (
     <View style={styles.container}>
       <Image
