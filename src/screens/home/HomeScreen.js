@@ -2,10 +2,10 @@
 //Ver como hacerle para que la navbar se coloque bien
 import { View, Text, SafeAreaView, ScrollView, FlatList } from "react-native";
 import React from "react";
-import BuscarBar from "../components/SearchBar";
-import Categories from "../components/Categories";
-import { productosInventados} from "../components/ProductosCard";
-import ProductoCard from "../components/ProductoCard";
+import BuscarBar from "../../components/SearchBar";
+import Categories from "../../components/Categories";
+import { productosInventados} from "../../components/ProductosCard";
+import ProductoCard from "../../components/ProductoCard";
 
 export default function Home({ navigation }) {
   const [productosData, setProductoData] = React.useState(productosInventados);

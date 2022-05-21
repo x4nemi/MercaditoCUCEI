@@ -20,11 +20,13 @@ Validación
 //Usar Firestore Functions para varias cosas
 
 //Screens
-import HomeScreen from "./screens/HomeScreen";
-import LoginScreen from "./screens/LoginScreen";
-import CRUDScreen from "./screens/CRUDScreen";
-import ProfileScreen from "./screens/ProfileScreen";
-import StoreScreen from "./screens/StoreScreen";
+
+import HomeScreen from "./src/screens/home/HomeScreen";
+import LoginScreen from "./src/screens/login/LoginScreen";
+import CRUDScreen from "./src/screens/crud/CRUDScreen";
+import ProfileScreen from "./src/screens/profile/ProfileScreen";
+import StoreScreen from "./src/screens/store/StoreScreen";
+import ProductScreen from "./src/screens/product/ProductScreen";
 
 //Navigation
 import { NavigationContainer, StackActions } from "@react-navigation/native";
@@ -41,7 +43,7 @@ const Tab = createBottomTabNavigator();
 function Panels({ navigation }) {
   return (
     <Tab.Navigator
-      initialRouteName={"Perfil"}
+      initialRouteName={"CRUD"}
       shifting={true}
       screenOptions={({ route }) => ({
         headerShown: false,
@@ -66,7 +68,7 @@ function Panels({ navigation }) {
         },
       })}
       tabBarOptions={{
-        activeTintColor: "#22d3ee",
+        activeTintColor: "#2563eb",
         inactiveTintColor: "#6b7280",
         labelStyle: { fontSize: 10 },
         style: { padding: 10, height: 70 },
@@ -75,7 +77,7 @@ function Panels({ navigation }) {
       <Tab.Screen name={"Home"} component={HomeScreen} />
       <Tab.Screen
         name={"CRUD"}
-        component={CRUDScreen}
+        component={ProductScreen}
         options={{ headerShown: true }}
       />
       <Tab.Screen name={"Tienda"} component={StoreScreen} />

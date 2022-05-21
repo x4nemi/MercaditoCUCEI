@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, StyleSheet, TouchableOpacity, StatusBar, Image, TextInput, ScrollView } from "react-native";
+import { View, Text, StyleSheet, TouchableOpacity, StatusBar, Image, TextInput, ScrollView, SafeAreaView } from "react-native";
 
 function ProfileScreen() {
   //States
@@ -9,12 +9,17 @@ function ProfileScreen() {
 
   const[showCancel,setShowCancel] = React.useState(false)
 
+  const onCancel = () =>{
+    setShowCancel(false);
+    console.log(showCancel)
+  }
+
   return( 
-    <ScrollView style={{backgroundColor:"white"}}>
+    <ScrollView style={styles.main}>
       {/*Header*/}
       <View style={styles.header}>
         <View style = {{flexDirection:"row-reverse"}}>
-          <TouchableOpacity style={styles.button}>
+          <TouchableOpacity style={[styles.button,{marginRight:10}]}>
             <Text style={styles.buttonText}>Cerrar Sesión</Text>
           </TouchableOpacity>
         </View>
@@ -26,7 +31,7 @@ function ProfileScreen() {
         </View>
       </View>
       {/**Form*/}
-      <View style={{paddingHorizontal:10, paddingTop:5, backgroundColor:"#dcdcdc", paddingBottom:100}}>
+      <View style={styles.form}>
         {/**Nombre */}
         <View>
           <Text style={styles.formText}>
@@ -70,7 +75,7 @@ function ProfileScreen() {
         <View style = {{flexDirection:"row-reverse", justifyContent:"space-between"}}>
           {showCancel && 
             <TouchableOpacity style={styles.button}
-              onPress={() =>{console.log("pressed")}}>
+            onPress={onCancel}>
               <Text style={styles.buttonText}>Cancelar</Text>
             </TouchableOpacity>}
           <TouchableOpacity style={styles.button}>
@@ -84,21 +89,33 @@ function ProfileScreen() {
 export default ProfileScreen;
 
 const styles = StyleSheet.create({
+  main:{
+    borderRadius:10,
+    backgroundColor:"white",
+    margin:10,
+  },
   header: {
     backgroundColor:"white",
     marginTop: StatusBar.currentHeight + 15 || 15,
   },
   button: {
-    backgroundColor:"#22D3EE" ,
+    backgroundColor:"#2563eb" ,
     borderRadius:10 ,
-    padding:5,
+    paddingHorizontal:5,
     paddingVertical:8,
     alignItems:"center",
+  },
+  form:{
+    borderRadius:10,
+    paddingHorizontal:10,
+    paddingTop:5,
+    backgroundColor:"#dcdcdc",
+    paddingBottom:100
   },
   buttonText: {
     fontSize: 17, 
     fontWeight:"600", 
-    color: "black"
+    color: "#f1f5f9"
   },
   formText:{
     fontSize: 17, 
@@ -108,8 +125,7 @@ const styles = StyleSheet.create({
   container: {
     flex:1, 
     alignItems:"center", 
-    marginTop:10,
-    marginBottom:10,
+    marginVertical:10,
   },
   profilePicture: {
     width: 200,
@@ -125,9 +141,8 @@ const styles = StyleSheet.create({
     borderColor: "white",
     borderWidth: 2,
     borderRadius: 10,
-    padding: 10,
-    marginVertical: 10,
+    padding: 5,
+    marginVertical: 5,
     backgroundColor: "#ffffff90",
-    marginBottom: 20,
   },
 });

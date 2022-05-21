@@ -8,9 +8,9 @@ import {
   StatusBar,
 } from "react-native";
 import React from "react";
-import BuscarBar from "../components/SearchBar";
-import { productosInventados } from "../components/ProductosCard";
-import ProductoCard from "../components/ProductoCard";
+import BuscarBar from "../../components/SearchBar";
+import { productosInventados } from "../../components/ProductosCard";
+import ProductoCard from "../../components/ProductoCard";
 
 const Store = ({ navigation }) => {
   const [productosData, setProductoData] = React.useState(productosInventados);

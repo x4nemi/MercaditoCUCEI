@@ -18,7 +18,7 @@ import {
   signInWithEmailAndPassword,
 } from "firebase/auth";
 import { initializeApp } from "firebase/app";
-import { firebaseConfig } from "../firebase-config";
+import { firebaseConfig } from "../../../firebase-config";
 
 //Navigation
 import { useNavigation } from "@react-navigation/native";
