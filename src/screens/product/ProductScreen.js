@@ -25,7 +25,7 @@ const ProductScreen = ({ item, visible }) => {
         animationType="fade"
       >
         <View style={styles.container}>
-          <View style={{marginHorizontal:10}}>
+          <View style={{ marginHorizontal: 10 }}>
             {/**Image Container */}
             <View style={styles.imgContainer}>
               <Image
@@ -33,10 +33,21 @@ const ProductScreen = ({ item, visible }) => {
                 source={require("../../assets/store.png")}
               />
             </View>
-            <Text style={{ paddingLeft: 15 }}>Se encuentra en:</Text>
-            <Text style={{ paddingLeft: 30, fontStyle: "italic", fontSize: 20 }}>
-              Modulo X
-            </Text>
+            <View style={{ flexDirection: "row", justifyContent: "space-between", }}>
+              <View>
+                <Text style={{ paddingLeft: 15 }}>Se encuentra en:</Text>
+                <Text
+                  style={{ paddingLeft: 30, fontStyle: "italic", fontSize: 20 }}>
+                  Modulo X
+                </Text>
+              </View>
+              <View style={styles.timeContainer}>
+                <Text style={{fontSize:20}}>11:00</Text>
+                <Text style={{fontSize:17}}> a </Text>
+                <Text style={{fontSize:20}}>17:00</Text>
+              </View>
+            </View>
+
             {/*Information Data */}
             <View style={styles.info}>
               <Text
@@ -45,10 +56,9 @@ const ProductScreen = ({ item, visible }) => {
                 Nombre Producto
               </Text>
               <Text style={{ fontSize: 15, color: "black" }}>
-                Esta es una descripción de ejemplo lorem iasdfasdfsdfasdfafa a sf
-                asdf asd ads asdf asd fasdf asdflasd
-                iasdoladsfasdkhfashlasdh lushadfhaslfashflasdhlasdfhasdjkfkasdnkjfasdjfbas
-                fas
+                Esta es una descripción de ejemplo lorem iasdfasdfsdfasdfafa a
+                sf asdf asd ads asdf asd fasdf asdflasd iasdoladsfasdkhfashlasdh
+                lushadfhaslfashflasdhlasdfhasdjkfkasdnkjfasdjfbas fas
               </Text>
               <Text
                 style={{ fontSize: 40, fontWeight: "bold", color: "#f59e0b" }}
@@ -56,19 +66,21 @@ const ProductScreen = ({ item, visible }) => {
                 $19.90
               </Text>
             </View>
-            
           </View>
           {/**Disponibility */}
           <View style={styles.footer}>
             <Text
-              style={{ fontSize: 30, fontWeight: "bold", color: "#f1f5f9", paddingHorizontal:50 }}
+              style={{
+                fontSize: 30,
+                fontWeight: "bold",
+                color: "#f1f5f9",
+                paddingHorizontal: 50,
+              }}
             >
               Disponibles
             </Text>
           </View>
-          
         </View>
-        
       </Modal>
     </View>
   );
@@ -88,7 +100,7 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
     marginVertical: 30,
     margin: 20,
-    justifyContent:"space-between",
+    justifyContent: "space-between",
     borderRadius: 20,
     shadowColor: "#000",
     shadowOffset: {
@@ -104,7 +116,6 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     alignSelf: "center",
     marginBottom: 5,
-    backgroundColor: "green",
     width: 300,
     height: 250,
   },
@@ -114,14 +125,21 @@ const styles = StyleSheet.create({
   },
   info: {
     alignItems: "center",
-    marginTop:10,
+    marginTop: 10,
+  },
+  timeContainer:{
+    backgroundColor: "#60a5fa", 
+    flexDirection:"row",
+    borderRadius:20,
+    padding:2,
+    alignItems:"center",
   },
   footer: {
-    backgroundColor: "#f87171",
+    backgroundColor: "#f87171" | "#059669",
     width: "100%",
     height: 60,
-    alignSelf:"center",
+    alignSelf: "center",
     alignItems: "center",
-    borderRadius:20,
+    borderRadius: 20,
   },
 });

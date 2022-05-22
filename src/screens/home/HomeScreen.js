@@ -4,7 +4,7 @@ import { View, Text, SafeAreaView, ScrollView, FlatList } from "react-native";
 import React from "react";
 import BuscarBar from "../../components/SearchBar";
 import Categories from "../../components/Categories";
-import { productosInventados} from "../../components/ProductosCard";
+import { productosInventados } from "../../components/ProductosCard";
 import ProductoCard from "../../components/ProductoCard";
 
 export default function Home({ navigation }) {
@@ -24,6 +24,7 @@ export default function Home({ navigation }) {
     );
   };
 
+  // Refresh Control
   //Render Home
   return (
     <View style={{ backgroundColor: "#eee", flex: 1 }}>
@@ -32,7 +33,10 @@ export default function Home({ navigation }) {
         <BuscarBar />
       </View>
       {/*Listas no deben estar denro de un scroll view */}
-      <View showsVerticalScrollIndicator={false} style={{backgroundColor: "#eee"}}>
+      <View
+        showsVerticalScrollIndicator={false}
+        style={{ backgroundColor: "#eee" }}
+      >
         <Categories />
         <FlatList
           data={productosData}
@@ -44,4 +48,3 @@ export default function Home({ navigation }) {
     </View>
   );
 }
-
