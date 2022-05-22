@@ -77,7 +77,7 @@ function Panels({ navigation }) {
       <Tab.Screen name={"Home"} component={HomeScreen} />
       <Tab.Screen
         name={"CRUD"}
-        component={ProductScreen}
+        component={CRUDScreen}
         options={{ headerShown: true }}
       />
       <Tab.Screen name={"Tienda"} component={StoreScreen} />
@@ -86,18 +86,19 @@ function Panels({ navigation }) {
   );
 }
 
-//Main 
+//Main
 export default function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator
-        initialRouteName={"Panels"}
+        initialRouteName={"Hola"}
         screenOptions={({ route }) => ({
           headerShown: false,
         })}
       >
         <Stack.Screen name="Login" component={LoginScreen} />
         <Stack.Screen name="Panels" component={Panels} />
+        <Stack.Screen name="Hola" component={CRUDScreen} />
       </Stack.Navigator>
     </NavigationContainer>
     // <NavigationContainer>
