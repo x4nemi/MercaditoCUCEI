@@ -43,7 +43,7 @@ const Tab = createBottomTabNavigator();
 function Panels({ navigation }) {
   return (
     <Tab.Navigator
-      initialRouteName={"CRUD"}
+      initialRouteName={"Tienda"}
       shifting={true}
       screenOptions={({ route }) => ({
         headerShown: false,

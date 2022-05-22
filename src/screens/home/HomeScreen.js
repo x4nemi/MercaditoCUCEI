@@ -11,7 +11,7 @@ export default function Home({ navigation }) {
   const [productosData, setProductoData] = React.useState(productosInventados);
   const [selectedId, setSelectedId] = React.useState(null);
 
-  //Render Card(Cambiar on Press a Detalles del producto)
+  //Render Card(Cambiar on Press a Detalles wdel producto)
   const renderCard = ({ item }) => {
     const backgroundColor = item.id === selectedId ? "#d1d5db" : "white";
 
