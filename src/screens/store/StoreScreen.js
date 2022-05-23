@@ -7,7 +7,7 @@ import {
   ScrollView,
   StatusBar,
   Button,
-  TouchableHighlight, 
+  TouchableHighlight,
 } from "react-native";
 import {useState, useEffect} from "react";
 import BuscarBar from "../../components/SearchBar";
@@ -51,20 +51,18 @@ const Store = ({ navigation }) => {
       </View>
       {/*Botones Añadir y Eliminar*/}
       <View style={{ marginBottom: 10 }}>
-        
-        <TouchableHighlight style={styles.button} >
-          <View >
-            <Text style={{fontSize:18}}>Añadir Producto</Text>
+        <TouchableHighlight style={styles.button}>
+          <View>
+            <Text style={{ fontSize: 18 }}>Añadir Producto</Text>
           </View>
         </TouchableHighlight>
-        
-          {/* <Button
+
+        {/* <Button
           style={{alignItems:"center",borderRadius: 20,alignSelf: "baseline",}}
           title="Añadir Producto"
           color="##15803d"
           onPress={() => Alert.alert('Button with adjusted color pressed')}
           /> */}
-
       </View>
       {/*Card List*/}
       <View
@@ -100,7 +98,7 @@ const styles = StyleSheet.create({
     padding: 20,
     paddingHorizontal: 75,
     borderRadius: 20,
-    alignSelf: "center", 
+    alignSelf: "center",
   },
 });
 

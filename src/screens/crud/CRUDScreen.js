@@ -6,14 +6,20 @@ import {
   ScrollView,
   TouchableOpacity,
   TextInput,
-  Button,
   SafeAreaView,
-  Alert,
 } from "react-native";
 import { Checkbox } from "react-native-paper";
-import React, { useState, useRef } from "react";
-import { Picker } from "@react-native-picker/picker";
-//Me quedé en que no puedo guardar en una string
+import React, { useState } from "react";
+import RNPickerSelect from "react-native-picker-select";
+import { getFirestore } from "firebase/firestore";
+import { collection, addDoc } from "firebase/firestore";
+import { initializeApp } from "firebase/app";
+import { firebaseConfig } from "../../../firebase-config";
+import { getAuth } from "firebase/auth";
+
+const app = initializeApp(firebaseConfig);
+const database = getFirestore();
+const auth = getAuth();
 
 let hourList = [
   "07",
@@ -33,34 +39,39 @@ let hourList = [
   "21",
 ];
 let minuteList = ["00", "10", "20", "30", "40", "50"];
+const initSchedule = {
+  days: [],
+  initial_hour: "00:00",
+  final_hour: "00:01",
+};
+
+const initProduct = {
+  name: "",
+  description: "",
+  price: "",
+  schedule: initSchedule,
+  places: [],
+};
+
 export default function CRUDScreen() {
   //Input para nombre
+  const [product, setProduct] = useState(initProduct);
   const [productName, setProductName] = useState("");
   const [description, setDescription] = useState("");
   const [price, setPrice] = useState("");
   const [places, setPlaces] = useState("");
-  const [initialHour, setInitialHour] = useState("");
-  const [finalHour, setFinalHour] = useState("");
-  const [hours, setHours] = useState([]);
 
-  /**
-   * hours =
-   */
+  const [schedule, setSchedule] = useState(initSchedule);
 
-  const [schedule, setSchedule] = useState([]);
-  const [days, setDays] = useState([]);
   const selectionedDays = [];
   const [hourInitial, setHourInitial] = useState("");
   const [initialMinute, setInitialMinute] = useState("");
   const [hourFinal, setHourFinal] = useState("");
   const [finalMinute, setFinalMinute] = useState("");
 
-  const pickerInitialHour = useRef();
-  const pickerInitialMinute = useRef();
-  const pickerFinalHour = useRef();
-  const pickerFinalMinute = useRef();
+  const [flag, setFlag] = useState(false);
 
-  const handleValidationSchedule = () => {
+  const handleValidationProduct = () => {
     console.log("Entro");
 
     if (
@@ -68,17 +79,25 @@ export default function CRUDScreen() {
       hourFinal == "" ||
       initialMinute == "" ||
       finalMinute == "" ||
-      places == "" ||
       hourInitial == "-1" ||
-      hourFinal == "-1"
+      hourFinal == "-1" ||
+      initialMinute == "-1" ||
+      finalMinute == "-1" ||
+      productName == "" ||
+      description == "" ||
+      price == "" ||
+      places == ""
     ) {
       alert("No puedes dejar vacío");
       console.log("No puedes dejar vacío");
+      setFlag(false);
     } else if (hourFinal == hourInitial && initialMinute >= finalMinute) {
       alert("Los minutos están mal /-:");
+      setFlag(false);
       console.log("Los minutos están mal /-:");
     } else if (hourInitial > hourFinal) {
       alert("Las horas están mal /-:");
+      setFlag(false);
       console.log("Las horas están mal");
     } else if (
       !(
@@ -90,8 +109,9 @@ export default function CRUDScreen() {
         isSelectedS
       )
     ) {
-      Alert.alert("No has seleccionado días");
+      alert("No has seleccionado días");
       console.log("No has seleccionado días");
+      setFlag(false);
     } else {
       console.log("okay");
 
@@ -115,36 +135,30 @@ export default function CRUDScreen() {
       }
 
       const scheduleAux = {
-        dayss: selectionedDays,
+        days: selectionedDays,
         initial_hour: hourInitial + ":" + initialMinute,
         final_hour: hourFinal + ":" + finalMinute,
       };
       console.log(scheduleAux);
-      addSchedule(scheduleAux);
-      console.log(schedule);
+      setSchedule(scheduleAux);
 
-      alert("Se ha agregado correctamente el horario (-:");
+      const p = places.split(",") || places.split(", ");
+
+      const productAux = {
+        name: productName,
+        description: description,
+        price: price,
+        schedule: scheduleAux,
+        places: p,
+      };
+      console.log(productAux);
+      setFlag(true);
     }
   };
 
-  const addSchedule = (s) => {
-    setSchedule((s) => [...s]);
-    console.log(s);
+  const onSend = async () => {
+    await addDoc(collection(database, "product"), product);
   };
-
-  //Vista del horario
-  // const lista = () => {
-  //   return schedule.map((horario, index) => {
-  //     console.log(horario)
-  //     return (
-  //       <View key={horario.key}>
-  //         <Text style={{ borderWidth: 2, borderColor: "green" }}>
-  //           Dias: {horario.days}
-  //         </Text>
-  //       </View>
-  //     );
-  //   });
-  // };
 
   //Checkboxes
   const [isSelectedL, setSelectionL] = useState(false);
@@ -155,8 +169,8 @@ export default function CRUDScreen() {
   const [isSelectedS, setSelectionS] = useState(false);
 
   return (
-    <SafeAreaView style={{ backgroundColor: "white" }}>
-      <ScrollView>
+    <ScrollView>
+      <SafeAreaView style={{ backgroundColor: "white" }}>
         <View style={styles.container}>
           {/*Nombre, descripción y precio del producto*/}
           <Text style={styles.text}>Nombre del producto:</Text>
@@ -177,9 +191,9 @@ export default function CRUDScreen() {
             value={price}
             onChangeText={setPrice}
           />
-          <Text>
+          {/* <Text>
             {productName} {price} {description}
-          </Text>
+          </Text> */}
           {/*Cargar imagen en proceso */}
           <TouchableOpacity style={styles.button}>
             <Text style={{ color: "black", fontWeight: "600" }}>
@@ -201,45 +215,48 @@ export default function CRUDScreen() {
             <View style={{ flexDirection: "column", paddingTop: 5 }}>
               <Text style={styles.text}>De</Text>
               <View style={styles.hourContainer}>
-                <Picker
-                  style={styles.picker}
-                  ref={pickerInitialHour}
-                  selectedValue={hourInitial}
-                  onValueChange={(itemValue, itemIndex) =>
-                    setHourInitial(itemValue)
-                  }
-                >
-                  <Picker.Item label="Hora" value="-1" key="-1" />
-                  {hourList.map((hour_initial, index) => (
-                    <Picker.Item
-                      label={hour_initial}
-                      key={index}
-                      value={hour_initial}
-                    />
-                  ))}
-                </Picker>
-                <Text>:</Text>
-                <Picker
-                  style={styles.picker}
-                  ref={pickerInitialMinute}
-                  selectedValue={initialMinute}
-                  onValueChange={(itemValue, itemIndex) =>
-                    setInitialMinute(itemValue)
-                  }
-                >
-                  <Picker.Item label="Minutos" value="-1" key="-1" />
-                  {minuteList.map((minute_initial, index) => (
-                    <Picker.Item
-                      label={minute_initial}
-                      key={index}
-                      value={minute_initial}
-                    />
-                  ))}
-                </Picker>
+                <RNPickerSelect
+                  placeholder={{ label: "Horas", value: "-1" }}
+                  onValueChange={(value) => setHourInitial(value)}
+                  items={hourList.map((hora, index) => ({
+                    key: index,
+                    label: hora,
+                    value: hora,
+                  }))}
+                />
+                <Text style={styles.text}>:</Text>
+                <RNPickerSelect
+                  placeholder={{ label: "Minutos", value: "-1" }}
+                  onValueChange={(value) => setInitialMinute(value)}
+                  items={minuteList.map((minutos, index) => ({
+                    key: index,
+                    label: minutos,
+                    value: minutos,
+                  }))}
+                />
               </View>
               <Text style={styles.text}>Hasta</Text>
               <View style={styles.hourContainer}>
-                <Picker
+                <RNPickerSelect
+                  placeholder={{ label: "Horas", value: "-1" }}
+                  onValueChange={(value) => setHourFinal(value)}
+                  items={hourList.map((hora, index) => ({
+                    key: index,
+                    label: hora,
+                    value: hora,
+                  }))}
+                />
+                <Text style={styles.text}>:</Text>
+                <RNPickerSelect
+                  placeholder={{ label: "Minutos", value: "-1" }}
+                  onValueChange={(value) => setFinalMinute(value)}
+                  items={minuteList.map((minutos, index) => ({
+                    key: index,
+                    label: minutos,
+                    value: minutos,
+                  }))}
+                />
+                {/* <Picker
                   style={styles.picker}
                   ref={pickerFinalHour}
                   selectedValue={hourFinal}
@@ -273,15 +290,15 @@ export default function CRUDScreen() {
                       value={minute_final}
                     />
                   ))}
-                </Picker>
+                </Picker> */}
               </View>
             </View>
-            <Text>
+            {/* <Text>
               {hourInitial}:{initialMinute}
             </Text>
             <Text>
               {hourFinal}:{finalMinute}
-            </Text>
+            </Text> */}
             {/* <TextInput
                   onChangeText={(hourIni) => setHourIni(hourIni)}
                   style={styles.input}
@@ -355,16 +372,37 @@ export default function CRUDScreen() {
               placeholder="Separa lugares por comas"
             />
             {/*Botón para agregar horario*/}
-            <TouchableOpacity
-              style={styles.button}
-              onPress={handleValidationSchedule}
-            >
-              <Text style={{ fontWeight: "600" }}>Agregar Horario</Text>
-            </TouchableOpacity>
+            <Text>{product.name}</Text>
           </View>
+          <TouchableOpacity
+            style={styles.button}
+            onPress={handleValidationProduct}
+          >
+            <Text style={{ fontWeight: "600" }}>Validar Producto</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={{
+              width: 250,
+              height: 40,
+              borderRadius: 10,
+              backgroundColor: flag ? "#00cfeb" : "#00cfeb20",
+              alignSelf: "center",
+              alignItems: "center",
+              justifyContent: "center",
+              marginVertical: 10,
+              borderColor: "#fff",
+              borderWidth: 1,
+            }}
+            onPress={onSend}
+            disabled={!flag}
+          >
+            <Text style={{ fontWeight: "600", color: flag ? "black" : "#999" }}>
+              Publicar Producto
+            </Text>
+          </TouchableOpacity>
         </View>
-      </ScrollView>
-    </SafeAreaView>
+      </SafeAreaView>
+    </ScrollView>
   );
 }
 
@@ -384,6 +422,7 @@ const styles = StyleSheet.create({
     borderColor: "grey",
     padding: 10,
     borderRadius: 10,
+    justifyContent: "",
   },
   button: {
     width: 250,
