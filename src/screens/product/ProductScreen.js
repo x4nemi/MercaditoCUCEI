@@ -30,7 +30,7 @@ const ProductScreen = ({ item, visible, onClose }) => {
           transparent={true}
           visible={visibility}
           onRequestClose={closeRequest}
-          presentationStyle="formSheet"
+          presentationStyle="pageSheet"
           animationType="slide"
         >
           <View style={styles.container}>
@@ -93,7 +93,7 @@ const ProductScreen = ({ item, visible, onClose }) => {
                   paddingHorizontal: 50,
                 }}
               >
-                {item.available == true ? "Disponible" : "No disponible"}
+                {item.available == true ? "Disponible" : "Agotado"}
               </Text>
             </View>
           </View>

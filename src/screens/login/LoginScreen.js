@@ -44,7 +44,6 @@ export default function LoginScreen() {
       .then((userCredential) => {
         console.log("Se ha creado la cuenta (-:");
         const user = userCredential.user;
-        console.log(user);
         navigation.navigate("Home");
       })
       .catch((error) => {
@@ -57,9 +56,9 @@ export default function LoginScreen() {
   const handleSignIn = () => {
     signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
-        console.log("Se ha creado la cuenta (-:");
+        console.log("Se ha Iniciado Sesión (-:");
         const user = userCredential.user;
-        console.log(user);
+        console.log(user.toJSON())
         navigation.navigate("Panels");
       })
       .catch((error) => {

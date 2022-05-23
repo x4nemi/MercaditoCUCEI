@@ -34,6 +34,7 @@ import { NavigationContainer, StackActions } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { useNavigation } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import FavScreen from "./src/screens/favorites/FavoriteScreen";
 
 //Navigation Creation
 const Stack = createNativeStackNavigator();
@@ -58,6 +59,8 @@ function Panels({ navigation }) {
             iconName = focused ? "chatbubble" : "chatbubble-outline";
           } else if (rn === "Tienda") {
             iconName = focused ? "briefcase" : "briefcase-outline";
+          } else if(rn == "Fav") {
+            iconName = focused ? "heart" : "heart-outline";
           } else {
             iconName = focused ? "person-circle" : "person-circle-outline";
           }
@@ -76,6 +79,7 @@ function Panels({ navigation }) {
       }}
     >
       <Tab.Screen name={"Home"} component={HomeScreen} />
+      <Tab.Screen name={"Fav"} component={FavScreen} />
       <Tab.Screen
         name={"CRUD"}
         component={CRUDScreen}
@@ -92,7 +96,7 @@ export default function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator
-        initialRouteName={"Panels"}
+        initialRouteName={"Login"}
         screenOptions={({ route }) => ({
           headerShown: false,
         })}
@@ -100,7 +104,7 @@ export default function App() {
         <Stack.Screen name="Panels" component={Panels} />
         <Stack.Screen name="Aviso" component={TermsScreen} options={{ headerShown: true }}/>
         <Stack.Screen name="Login" component={LoginScreen} />
-        <Stack.Screen name="Hola" component={CRUDScreen} />
+        {/* <Stack.Screen name="Hola" component={CRUDScreen} /> */}
       </Stack.Navigator>
     </NavigationContainer>
     // <NavigationContainer>

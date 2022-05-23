@@ -1,11 +1,16 @@
 import React from "react";
 import { View, Text, StyleSheet, TouchableOpacity, StatusBar, Image, TextInput, ScrollView, SafeAreaView } from "react-native";
 
+import { getAuth, onAuthStateChanged } from "firebase/auth";
+
+
 function ProfileScreen() {
+  const auth = getAuth();
+  const currentUser = auth.currentUser
   //States
   const [email, setEmail] = React.useState("ejemplo@alumnos.udg.mx");
   const [name, setName] = React.useState("Invitado");
-  const [password, setPassword] = React.useState("");
+  const [password, setPassword] = React.useState("********");
 
   const[showCancel,setShowCancel] = React.useState(false)
 

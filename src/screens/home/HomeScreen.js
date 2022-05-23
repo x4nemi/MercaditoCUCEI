@@ -72,7 +72,7 @@ export default function Home({ navigation }) {
         showsVerticalScrollIndicator={false}
         style={{ backgroundColor: "#eee" }}
       >
-        <Categories />
+        <Text style={{ fontSize: 30, fontWeight: "bold", color: "#44403c", alignSelf:"center" }}>Bienvenido a Mercadito CUCEI</Text>
         <FlatList
           data={productosData}
           renderItem={renderCard}
