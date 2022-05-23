@@ -422,7 +422,6 @@ const styles = StyleSheet.create({
     borderColor: "grey",
     padding: 10,
     borderRadius: 10,
-    justifyContent: "",
   },
   button: {
     width: 250,
