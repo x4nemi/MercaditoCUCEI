@@ -11,26 +11,25 @@ import {
 } from "react-native";
 import GestureRecognizer from "react-native-swipe-gestures";
 
-const ProductScreen = ({ item, visible }) => {
-  const [visibility, setVisibility] = useState(true);
+const ProductScreen = ({ item, visible, onClose }) => {
+  const [visibility, setVisibility] = useState(visible);
 
-
-  const onClose = () => {
-    setVisibility(false);
+  console.log(item)
+  const closeRequest = () => {
+    setVisibility(!visibility);
+    onClose()
   };
-
-
   
   return (
     <View style={styles.main}>
       <GestureRecognizer
         style={{flex:1}}
-        onSwipeRight={onClose}
-        onSwipeLeft={onClose}>
+        onSwipeRight={closeRequest}
+        onSwipeLeft={closeRequest}>
         <Modal
           transparent={true}
           visible={visibility}
-          onRequestClose={onClose}
+          onRequestClose={closeRequest}
           presentationStyle="formSheet"
           animationType="slide"
         >
@@ -48,7 +47,7 @@ const ProductScreen = ({ item, visible }) => {
                   <Text style={{ paddingLeft: 15 }}>Se encuentra en:</Text>
                   <Text
                     style={{ paddingLeft: 30, fontStyle: "italic", fontSize: 20 }}>
-                    Modulo X
+                    {item.location}
                   </Text>
                 </View>
                 <View style={styles.timeContainer}>
@@ -63,22 +62,29 @@ const ProductScreen = ({ item, visible }) => {
                 <Text
                   style={{ fontSize: 30, fontWeight: "bold", color: "#44403c" }}
                 >
-                  Nombre Producto
+                  {item.name}
                 </Text>
                 <Text style={{ fontSize: 15, color: "black" }}>
-                  Esta es una descripción de ejemplo lorem iasdfasdfsdfasdfafa a
-                  sf asdf asd ads asdf asd fasdf asdflasd iasdoladsfasdkhfashlasdh
-                  lushadfhaslfashflasdhlasdfhasdjkfkasdnkjfasdjfbas fas
+                  {item.description}
                 </Text>
-                <Text
-                  style={{ fontSize: 40, fontWeight: "bold", color: "#f59e0b" }}
-                >
-                  $19.90
-                </Text>
+
+                <View style={{flexDirection:"row"}}>
+                  <Text
+                    style={{ fontSize: 40, fontWeight: "bold", color: "#f59e0b" }}
+                  >
+                    $
+                  </Text>
+                  <Text
+                    style={{ fontSize: 40, fontWeight: "bold", color: "#f59e0b" }}
+                  >
+                    {item.price}
+                  </Text>
+                </View>
+
               </View>
             </View>
             {/**Disponibility */}
-            <View style={styles.footer}>
+            <View style={[styles.footer, {backgroundColor: item.available == true ? "#059669" : "#f87171"}]}>
               <Text
                 style={{
                   fontSize: 30,
@@ -87,7 +93,7 @@ const ProductScreen = ({ item, visible }) => {
                   paddingHorizontal: 50,
                 }}
               >
-                Disponible
+                {item.available == true ? "Disponible" : "No disponible"}
               </Text>
             </View>
           </View>
@@ -146,8 +152,8 @@ const styles = StyleSheet.create({
     alignItems:"center",
   },
   footer: {
-    backgroundColor: "#059669",
-    // backgroundColor: "#f87171",
+    // backgroundColor: item.available == true ? "#059669" : "#f87171",
+    backgroundColor: "#f87171",
     height: 60,
     alignSelf: "center",
     alignItems: "center",

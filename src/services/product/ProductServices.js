@@ -12,6 +12,7 @@ export async function getProducts(){
   try{
     //Snapshot
     const querySnapshot = await getDocs(collection(db, "productos"));
+    console.log("Fetching")
     querySnapshot.forEach((doc) => {
       let obj = doc.data()
       products.push({...obj, id:doc.id})

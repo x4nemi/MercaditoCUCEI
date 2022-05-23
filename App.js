@@ -92,13 +92,13 @@ export default function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator
-        initialRouteName={"Login"}
+        initialRouteName={"Panels"}
         screenOptions={({ route }) => ({
           headerShown: false,
         })}
       >
         <Stack.Screen name="Panels" component={Panels} />
-        <Stack.Screen name="Aviso" component={TermsScreen} />
+        <Stack.Screen name="Aviso" component={TermsScreen} options={{ headerShown: true }}/>
         <Stack.Screen name="Login" component={LoginScreen} />
         <Stack.Screen name="Hola" component={CRUDScreen} />
       </Stack.Navigator>

@@ -69,7 +69,7 @@ export default function LoginScreen() {
   };
 
   const toAviso = () => {
-    navigation.navigate("Aviso");
+    navigation.push("Aviso");
   };
 
   //CuentaScreen
