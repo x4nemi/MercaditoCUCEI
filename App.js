@@ -27,6 +27,7 @@ import CRUDScreen from "./src/screens/crud/CRUDScreen";
 import ProfileScreen from "./src/screens/profile/ProfileScreen";
 import StoreScreen from "./src/screens/store/StoreScreen";
 import ProductScreen from "./src/screens/product/ProductScreen";
+import TermsScreen from "./src/screens/TermsScreen";
 
 //Navigation
 import { NavigationContainer, StackActions } from "@react-navigation/native";
@@ -91,13 +92,14 @@ export default function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator
-        initialRouteName={"Panels"}
+        initialRouteName={"Login"}
         screenOptions={({ route }) => ({
           headerShown: false,
         })}
       >
-        <Stack.Screen name="Login" component={LoginScreen} />
         <Stack.Screen name="Panels" component={Panels} />
+        <Stack.Screen name="Aviso" component={TermsScreen} />
+        <Stack.Screen name="Login" component={LoginScreen} />
         <Stack.Screen name="Hola" component={CRUDScreen} />
       </Stack.Navigator>
     </NavigationContainer>

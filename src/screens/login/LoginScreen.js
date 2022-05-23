@@ -68,6 +68,10 @@ export default function LoginScreen() {
       });
   };
 
+  const toAviso = () => {
+    navigation.navigate("Aviso");
+  };
+
   //CuentaScreen
   return (
     <View style={styles.container}>
@@ -120,6 +124,11 @@ export default function LoginScreen() {
               <Text style={{ fontSize: 17, fontWeight: "400", color: "white" }}>
                 Crear Cuenta
               </Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={toAviso}
+            >
+              <Text style={{textDecorationLine:"underline"}}>Aviso de Privacidad</Text>
             </TouchableOpacity>
           </View>
         </BlurView>
