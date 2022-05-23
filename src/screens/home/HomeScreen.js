@@ -1,20 +1,27 @@
 //Si posición es fixed, se requiere react-native-web
 //Ver como hacerle para que la navbar se coloque bien
 import { View, Text, SafeAreaView, ScrollView, FlatList } from "react-native";
-import React from "react";
+import {useState, useEffect} from "react";
 import BuscarBar from "../../components/SearchBar";
 import Categories from "../../components/Categories";
 import { productosInventados } from "../../components/ProductosCard";
-import ProductoCard from "../../components/ProductoCard";
+import ProductoCard from "../../components/ProductCard";
+
+//Product Service
+import { getProducts } from "../../services/product/ProductServices";
 
 export default function Home({ navigation }) {
-  const [productosData, setProductoData] = React.useState(productosInventados);
-  const [selectedId, setSelectedId] = React.useState(null);
+  const [productosData, setProductos] = useState([]);
+  const [selectedId, setSelectedId] = useState(null);
+
+  async function fetchProducts() {
+    console.log("Fetching Products")
+    setProductos(await getProducts())
+  }
 
   //Render Card(Cambiar on Press a Detalles wdel producto)
   const renderCard = ({ item }) => {
     const backgroundColor = item.id === selectedId ? "#d1d5db" : "white";
-
     return (
       <ProductoCard
         item={item}
@@ -24,7 +31,9 @@ export default function Home({ navigation }) {
     );
   };
 
-  // Refresh Control
+  useEffect(async () => {
+    await fetchProducts();
+  },[]);
   //Render Home
   return (
     <View style={{ backgroundColor: "#eee", flex: 1 }}>
@@ -42,7 +51,7 @@ export default function Home({ navigation }) {
           data={productosData}
           renderItem={renderCard}
           keyExtractor={(item) => item.id}
-          extraData={selectedId}
+          extraData={getProducts()}
         />
       </View>
     </View>

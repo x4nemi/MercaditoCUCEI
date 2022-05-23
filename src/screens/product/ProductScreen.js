@@ -18,6 +18,9 @@ const ProductScreen = ({ item, visible }) => {
   const onClose = () => {
     setVisibility(false);
   };
+
+
+  
   return (
     <View style={styles.main}>
       <GestureRecognizer

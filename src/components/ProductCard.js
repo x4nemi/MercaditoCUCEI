@@ -3,6 +3,7 @@ import MaterialCommunityIcons from "react-native-vector-icons/Ionicons";
 import React from "react";
 
 const ProductoCard = ({ item, onPress, backgroundColor }) => {
+
   return (
     <View style={boxes.main}>
       {/*Card*/}
@@ -13,7 +14,7 @@ const ProductoCard = ({ item, onPress, backgroundColor }) => {
           {/*Card Info*/}
           <View style={{ flexDirection: "row", flex: 1 }}>
             {/*Imagen*/}
-            <Image source={{uri:item.image}}
+            <Image source={item.image}
               style={boxes.image}
             />
             {/*Info del Producto */}
@@ -21,14 +22,14 @@ const ProductoCard = ({ item, onPress, backgroundColor }) => {
               {/*Iconos e Info */}
               <View style={{flexDirection: "row",alignItems: "baseline"}}>
                 <Text style={{paddingHorizontal: 6, fontSize: 14, textTransform: "uppercase",}}>
-                  {item.titulo}
+                  {item.name}
                 </Text>
                 <View style={{paddingHorizontal:5}}>
                   <Text style={boxes.price}>${item.price}</Text>
                 </View>
                 <View style={{paddingHorizontal:5}}>
                   <Text style={boxes.disponibility}>
-                    {item.disponible == true ? "Disponible" : "Agotado"}
+                    {item.available == true ? "Disponible" : "Agotado"}
                   </Text>
                 </View>
                 <View style={{paddingHorizontal:5}}>
@@ -45,7 +46,7 @@ const ProductoCard = ({ item, onPress, backgroundColor }) => {
               </View>
               {/*Descripción del Producto */}
               <View style={boxes.description}>
-                <Text style={{fontSize: 9, color: "grey",}}>{item.descripcion}</Text>
+                <Text style={{fontSize: 9, color: "grey",}}>{item.description}</Text>
               </View>
             </View>
           </View>

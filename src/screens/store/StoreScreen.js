@@ -9,34 +9,24 @@ import {
   Button,
   TouchableHighlight, 
 } from "react-native";
-import React from "react";
+import {useState, useEffect} from "react";
 import BuscarBar from "../../components/SearchBar";
 
 //Productos
 import { productosInventados } from "../../components/ProductosCard";
-import ProductoCard from "../../components/ProductoCard";
+import ProductoCard from "../../components/ProductCard";
 
-import { initializeApp } from "firebase/app";
-import { getFirestore, collection, getDocs } from "firebase/firestore";
-import { firebaseConfig } from "../../../firebase-config";
-
-//Iinitalize app
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
-
-//Snapshot
-const snapshot = await db.collection('users').get();
-snapshot.forEach((doc) => {
-  console.log(doc.id, '=>', doc.data());
-});
-
-
+//Product Service
+import { getProducts } from "../../services/product/ProductServices";
 
 const Store = ({ navigation }) => {
-  const [productosData, setProductoData] = React.useState(productosInventados);
-  const [selectedId, setSelectedId] = React.useState(null);
-
+  async function fetchProducts() {
+    setProductos(await getProducts())
+  }
   
+  const [productosData, setProductos] = useState([]);
+  const [selectedId, setSelectedId] = useState(null);
+
   //Render Card(Cambiar onPress a Editar Producto)
   const renderCard = ({ item }) => {
     const backgroundColor = item.id === selectedId ? "#d1d5db" : "white";
@@ -48,6 +38,11 @@ const Store = ({ navigation }) => {
       />
     );
   };
+
+  useEffect(async () => {
+    await fetchProducts();
+  },[]);
+
   return (
     <SafeAreaView style={styles.container}>
       {/* Header */}
