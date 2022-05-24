@@ -82,7 +82,7 @@ export default function CRUDModal({ item, visible, onClose }) {
 
   const [visibility, setVisibility] = useState(visible);
 
-  
+  const [flag, setFlag] = useState(true);
 
   const handleValidationProduct = () => {
     if (
@@ -159,10 +159,14 @@ export default function CRUDModal({ item, visible, onClose }) {
         id: item.id,
         user_id: auth.currentUser.uid
       };
-      onSubmit(productAux);
-      alert("Se han enviado los cambios al producto");
-      closeRequest();
-      navigation.navigate("Home");
+      if(flag){
+        onSubmit(productAux);
+        alert("Se han enviado los cambios al producto");
+        closeRequest();
+        navigation.navigate("Home");
+      } else {
+        setFlag(true)
+      }
     }
   };
 
@@ -223,8 +227,7 @@ export default function CRUDModal({ item, visible, onClose }) {
             <TextInput style={styles.input} onChangeText={setProductName} value={productName}/>
             <Text style={styles.text}>Descripción</Text>
             <TextInput
-              multiline="true"
-              style={[styles.input, { paddingVertical: 15 }]}
+              style={[styles.input, { paddingVertical: 15, textAlignVertical:"top" }]}
               onChangeText={setDescription}
               value={description}
             />
@@ -233,8 +236,7 @@ export default function CRUDModal({ item, visible, onClose }) {
             <View style={{ flexDirection: "row" }}>
               <TextInput
                 style={[styles.input, { width: "50%" }]}
-                keyboardType={"numeric"}
-                numeric
+                // keyboardType={"numeric"}
                 value={price}
                 onChangeText={setPrice}
               />
@@ -400,7 +402,6 @@ export default function CRUDModal({ item, visible, onClose }) {
                 value={location}
                 onChangeText={(places) => setLocation(places)}
                 style={styles.input}
-                multiline="true"
                 placeholder="Separa lugares por comas"
               />
               {/*Botón para agregar horario*/}

@@ -8,15 +8,15 @@ import {
   TextInput,
   SafeAreaView,
 } from "react-native";
-import { Checkbox } from "react-native";
-import React, { useState } from "react";
+import { Checkbox } from "react-native-paper";
+import { useState } from "react";
 import RNPickerSelect from "react-native-picker-select";
+
 import { getFirestore } from "firebase/firestore";
 import { collection, addDoc } from "firebase/firestore";
 import { initializeApp } from "firebase/app";
 import { firebaseConfig } from "../../../firebase-config";
 import { getAuth } from "firebase/auth";
-import { useNavigation } from "@react-navigation/native";
 
 
 const app = initializeApp(firebaseConfig);
@@ -50,8 +50,8 @@ const initProduct = {
   location: "",
 };
 
-export default function CRUDScreen({item}) {
-  const navigation = useNavigation();
+export default function CRUDScreen({navigation}) {
+  
   //Inputs
   const [product, setProduct] = useState(initProduct);
   const [productName, setProductName] = useState("");
@@ -76,7 +76,7 @@ export default function CRUDScreen({item}) {
 
   const[isAvailable, setAvailable] = useState(false)
 
-  const [flag, setFlag] = useState(false);
+  const [flag, setFlag] = useState(true);
 
   const handleValidationProduct = () => {
     if (
@@ -154,10 +154,13 @@ export default function CRUDScreen({item}) {
       };
       
       console.log(productAux);
-      setFlag(true);
-      onSend(productAux);
-      alert("Se ha enviado el producto!");
-      navigation.navigate("Home");
+      if(flag){
+        onSend(productAux);
+        alert("Se ha enviado el producto!");
+        navigation.navigate("Home");
+      }else {
+        setFlag(true);
+      }
     }
   };
 
@@ -175,7 +178,6 @@ export default function CRUDScreen({item}) {
           <Text style={styles.text}>Descripción</Text>
           <TextInput
             style={styles.input}
-            multiline="true"
             onChangeText={setDescription}
             value={description}
           />
@@ -263,41 +265,6 @@ export default function CRUDScreen({item}) {
                     value: minutos,
                   }))}
                 />
-                {/* <Picker
-                  style={styles.picker}
-                  ref={pickerFinalHour}
-                  selectedValue={hourFinal}
-                  onValueChange={(itemValue, itemIndex) =>
-                    setHourFinal(itemValue)
-                  }
-                >
-                  <Picker.Item label="Hora" value="-1" key="-1" />
-                  {hourList.map((hour_final, index) => (
-                    <Picker.Item
-                      label={hour_final}
-                      key={index}
-                      value={hour_final}
-                    />
-                  ))}
-                </Picker>
-                <Text style={styles.text}>:</Text>
-                <Picker
-                  style={styles.picker}
-                  ref={pickerFinalMinute}
-                  selectedValue={finalMinute}
-                  onValueChange={(itemValue, itemIndex) =>
-                    setFinalMinute(itemValue)
-                  }
-                >
-                  <Picker.Item label="Minutos" value="-1" key="-1" />
-                  {minuteList.map((minute_final, index) => (
-                    <Picker.Item
-                      label={minute_final}
-                      key={index}
-                      value={minute_final}
-                    />
-                  ))}
-                </Picker> */}
               </View>
             </View>
             {/* <Text>
@@ -375,7 +342,6 @@ export default function CRUDScreen({item}) {
             <TextInput
               onChangeText={(places) => setPlaces(places)}
               style={styles.input}
-              multiline="true"
               placeholder="Separa lugares por comas"
             />
             {/*Botón para agregar horario*/}

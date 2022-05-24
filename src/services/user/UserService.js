@@ -5,7 +5,6 @@ import { collection, query, where, getDocs, setDoc } from "firebase/firestore";
 import { getFirestore } from "firebase/firestore";
 
 import { getAuth, updateProfile } from "firebase/auth";
-import { Alert } from "react-native";
 
 //App Settings
 const app = initializeApp(firebaseConfig);
@@ -15,20 +14,17 @@ const db = getFirestore(app);
 const auth = getAuth();
 const currentUser = auth.currentUser;
 
-export async function updateU(Nemail, Npassword, name) {
+export async function updateU(Nemail, Npassword, name,currUser) {
   let newUser = {};
   if (Nemail != "") newUser = { ...newUser, email: Nemail };
   if (Npassword != "") newUser = { ...newUser, password: Npassword };
   if (name != "") newUser = { ...newUser, displayName: name };
-  console.log(newUser);
-  const uid = auth.currentUser.uid;
-  updateProfile(auth.currentUser, newUser)
+  updateProfile(currUser, newUser)
     .then(() => {
       //Editamos el nombre almacenado en la base de datos
       // querySnapshot.forEach((doc) =>{
       //   await setDoc(doc()){}
       // })
-      alert("Se actualizó con exito al usuario");
     })
     .catch((error) => {
       console.log(error);

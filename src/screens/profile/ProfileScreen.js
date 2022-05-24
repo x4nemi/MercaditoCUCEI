@@ -146,7 +146,7 @@ function ProfileScreen() {
           <TouchableOpacity
             disabled={!existChanges}
             onPress={() => {
-              updateU(email, password, name);
+              updateU(email, password, name, auth.currentUser);
               LogOut();
               navigation.navigate("Login");
             }}

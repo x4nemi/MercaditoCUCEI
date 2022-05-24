@@ -11,6 +11,7 @@ import {
 import React from "react";
 import { BlurView } from "expo-blur";
 import { updateU } from "../../services/user/UserService";
+import { createFavorite } from "../../services/favorites/FavoriteServices";
 
 //FireBase
 import {
@@ -40,19 +41,22 @@ export default function LoginScreen() {
   const auth = getAuth(app);
 
   //Sign Up
-  const handleCreateAccount = () => {
+  const handleCreateAccount = async () => {
+    let userId;
     createUserWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         console.log("Se ha creado la cuenta (-:");
-        navigation.navigate("Panels");
+        alert("Se ha creado la cuenta con exito!")
+        navigation.navigate("Login");
+        userId = userCredential.user.uid
+        createFavorite(userId)
+        let at = email.lastIndexOf("@")
+        let aux = email.slice(0,at)
+        updateU(email,password,aux,userCredential.user)
       })
       .catch((error) => {
         console.log(error);
-        Alert.alert(error.message);
       });
-      let at = email.lastIndexOf("@")
-      updateU(email,password,aux)
-      let aux = email.slice(0,at)
   };
 
   //Sign In
