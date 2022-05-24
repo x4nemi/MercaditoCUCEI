@@ -69,7 +69,7 @@ export default function LoginScreen() {
         navigation.navigate("Panels");
       })
       .catch((error) => {
-        alert(error);
+        alert("Datos invalidos");
         console.log(error);
       });
     
@@ -83,6 +83,7 @@ export default function LoginScreen() {
   return (
     <View style={styles.container}>
       <Image
+        backgroundColor blu
         source={{ uri: wallpaper }}
         style={[styles.image, StyleSheet.absoluteFill]}
       />
@@ -97,7 +98,9 @@ export default function LoginScreen() {
       >
         <BlurView intensity={40}>
           <View style={styles.login}>
-            <Image source={{ uri: wallpaper }} style={styles.profilePicture} />
+            <Image source={require("../../assets/Mercado.png")} 
+            style={styles.profilePicture} />
+
             <View>
               <Text style={{ fontSize: 17, fontWeight: "400", color: "white" }}>
                 E-mail
@@ -105,7 +108,7 @@ export default function LoginScreen() {
               <TextInput
                 onChangeText={(text) => setEmail(text)}
                 style={styles.input}
-                placeholder="nombre@correo.com"
+                placeholder="nombre@alumnos.udg.mx"
               />
             </View>
             <View>
@@ -169,8 +172,8 @@ const styles = StyleSheet.create({
     height: 100,
     borderRadius: 50,
     borderColor: "white",
-    borderWidth: 1,
     marginVertical: 10,
+    resizeMode : "center",
   },
 
   input: {
