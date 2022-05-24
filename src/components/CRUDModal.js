@@ -16,7 +16,6 @@ import { Checkbox } from "react-native-paper";
 import GestureRecognizer from "react-native-swipe-gestures";
 import RNPickerSelect from "react-native-picker-select";
 
-
 import { firebaseConfig } from "../../firebase-config";
 import { getFirestore } from "firebase/firestore";
 import { collection, addDoc } from "firebase/firestore";
@@ -56,7 +55,7 @@ const initProduct = {
 };
 
 export default function CRUDModal({ item, visible, onClose }) {
-  console.log(item.id)
+  console.log(item.id);
   const navigation = useNavigation();
   //Inputs
   const [product, setProduct] = useState(item);
@@ -157,43 +156,38 @@ export default function CRUDModal({ item, visible, onClose }) {
         initial_hour: hourInitial + ":" + initialMinute,
         final_hour: hourFinal + ":" + finalMinute,
         id: item.id,
-        user_id: auth.currentUser.uid
+        user_id: auth.currentUser.uid,
+        user_name: auth.currentUser.displayName,
       };
-      if(flag){
+      if (flag) {
         onSubmit(productAux);
         alert("Se han enviado los cambios al producto");
         closeRequest();
         navigation.navigate("Home");
       } else {
-        setFlag(true)
+        setFlag(true);
       }
     }
   };
 
-  const handleItem = (item) =>{
-    let d = item.days
-    d.forEach((day) =>{
-      if(day == "Lunes")
-        setSelectionL(true)
-      if(day == "Martes")
-        setSelectionMa(true)
-      if(day == "Miercoles")
-        setSelectionMi(true)
-      if(day == "Jueves")
-        setSelectionJ(true)
-      if(day == "Viernes")
-        setSelectionV(true)
-      if(day == "Sabado")
-        setSelectionS(true)
-    })
+  const handleItem = (item) => {
+    let d = item.days;
+    d.forEach((day) => {
+      if (day == "Lunes") setSelectionL(true);
+      if (day == "Martes") setSelectionMa(true);
+      if (day == "Miercoles") setSelectionMi(true);
+      if (day == "Jueves") setSelectionJ(true);
+      if (day == "Viernes") setSelectionV(true);
+      if (day == "Sabado") setSelectionS(true);
+    });
     //Initial Hour
-    let auxTime  = item.initial_hour
-    setInitialMinute(auxTime.slice(-2,))
-    setHourInitial(auxTime.slice(0,2))
-    auxTime = item.final_hour
-    setFinalMinute(auxTime.slice(-2,))
-    setHourFinal(auxTime.slice(0,2))
-  } 
+    let auxTime = item.initial_hour;
+    setInitialMinute(auxTime.slice(-2));
+    setHourInitial(auxTime.slice(0, 2));
+    auxTime = item.final_hour;
+    setFinalMinute(auxTime.slice(-2));
+    setHourFinal(auxTime.slice(0, 2));
+  };
 
   const onSubmit = async (product) => {
     await updateP(product);
@@ -204,9 +198,9 @@ export default function CRUDModal({ item, visible, onClose }) {
     onClose();
   };
 
-  useEffect( ()=>{
-    handleItem(item)
-  },[])
+  useEffect(() => {
+    handleItem(item);
+  }, []);
   return (
     <ScrollView style={{ backgroundColor: "white" }}>
       <GestureRecognizer
@@ -224,10 +218,17 @@ export default function CRUDModal({ item, visible, onClose }) {
           <View style={styles.container}>
             {/*Nombre, descripción y precio del producto*/}
             <Text style={styles.text}>Nombre del producto:</Text>
-            <TextInput style={styles.input} onChangeText={setProductName} value={productName}/>
+            <TextInput
+              style={styles.input}
+              onChangeText={setProductName}
+              value={productName}
+            />
             <Text style={styles.text}>Descripción</Text>
             <TextInput
-              style={[styles.input, { paddingVertical: 15, textAlignVertical:"top" }]}
+              style={[
+                styles.input,
+                { paddingVertical: 15, textAlignVertical: "top" },
+              ]}
               onChangeText={setDescription}
               value={description}
             />
@@ -248,7 +249,7 @@ export default function CRUDModal({ item, visible, onClose }) {
                   onPress={() => {
                     setAvailable(!isAvailable);
                   }}
-                  color="#00cfeb"
+                  color="#4ade80"
                 />
                 <Text style={{ alignSelf: "center" }}>Disponible</Text>
               </View>
@@ -265,7 +266,7 @@ export default function CRUDModal({ item, visible, onClose }) {
             {/*Contenedor para horario*/}
             <View
               style={{
-                borderColor: "#00cfeb60",
+                borderColor: "#4ade80",
                 borderWidth: 2,
                 borderRadius: 7,
                 padding: 3,
@@ -350,7 +351,7 @@ export default function CRUDModal({ item, visible, onClose }) {
                   onPress={() => {
                     setSelectionL(!isSelectedL);
                   }}
-                  color="#00cfeb"
+                  color="#4ade80"
                 />
                 <Text style={{ alignSelf: "center" }}>Lunes</Text>
                 <Checkbox
@@ -358,7 +359,7 @@ export default function CRUDModal({ item, visible, onClose }) {
                   onPress={() => {
                     setSelectionMa(!isSelectedMa);
                   }}
-                  color="#00cfeb"
+                  color="#4ade80"
                 />
                 <Text style={{ alignSelf: "center" }}>Martes</Text>
                 <Checkbox
@@ -366,7 +367,7 @@ export default function CRUDModal({ item, visible, onClose }) {
                   onPress={() => {
                     setSelectionMi(!isSelectedMi);
                   }}
-                  color="#00cfeb"
+                  color="#4ade80"
                 />
                 <Text style={{ alignSelf: "center" }}>Miércoles</Text>
               </View>
@@ -376,7 +377,7 @@ export default function CRUDModal({ item, visible, onClose }) {
                   onPress={() => {
                     setSelectionJ(!isSelectedJ);
                   }}
-                  color="#00cfeb"
+                  color="#4ade80"
                 />
                 <Text style={{ alignSelf: "center" }}>Jueves</Text>
                 <Checkbox
@@ -384,7 +385,7 @@ export default function CRUDModal({ item, visible, onClose }) {
                   onPress={() => {
                     setSelectionV(!isSelectedV);
                   }}
-                  color="#00cfeb"
+                  color="#4ade80"
                 />
                 <Text style={{ alignSelf: "center" }}>Viernes</Text>
                 <Checkbox
@@ -392,7 +393,7 @@ export default function CRUDModal({ item, visible, onClose }) {
                   onPress={() => {
                     setSelectionS(!isSelectedS);
                   }}
-                  color="#00cfeb"
+                  color="#4ade80"
                 />
                 <Text style={{ alignSelf: "center" }}>Sábado</Text>
               </View>
@@ -417,7 +418,7 @@ export default function CRUDModal({ item, visible, onClose }) {
                   width: 250,
                   height: 40,
                   borderRadius: 10,
-                  backgroundColor: flag ? "#00cfeb" : "#00cfeb20",
+                  backgroundColor: flag ? "4ade80" : "#86efac",
                   alignSelf: "center",
                   alignItems: "center",
                   justifyContent: "center",
@@ -460,7 +461,7 @@ const styles = StyleSheet.create({
     width: 250,
     height: 40,
     borderRadius: 10,
-    backgroundColor: "#00cfeb",
+    backgroundColor: "#4ade80",
     alignSelf: "center",
     alignItems: "center",
     justifyContent: "center",

@@ -39,3 +39,4 @@ export async function updateU(Nemail, Npassword, name,currUser) {
   // })
   // Alert.alert("Se actualizó el usuario")
 }
+

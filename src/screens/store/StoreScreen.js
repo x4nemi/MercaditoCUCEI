@@ -54,6 +54,7 @@ const Store = ({ navigation }) => {
           onCardPress();
         }}
         backgroundColor={{ backgroundColor }}
+        onStore={true}
       />
     );
   };

@@ -32,9 +32,10 @@ import TermsScreen from "./src/screens/TermsScreen";
 //Navigation
 import { NavigationContainer, StackActions } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { useNavigation } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import FavScreen from "./src/screens/favorites/FavoriteScreen";
+import { useEffect, useState } from "react";
+import { getProducts } from "./src/services/product/ProductServices";
 
 //Navigation Creation
 const Stack = createNativeStackNavigator();
@@ -97,7 +98,7 @@ export default function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator
-        initialRouteName={"Hola"}
+        initialRouteName={"Login"}
         screenOptions={({ route }) => ({
           headerShown: false,
         })}

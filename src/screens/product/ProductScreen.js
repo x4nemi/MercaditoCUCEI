@@ -11,11 +11,10 @@ import {
 } from "react-native";
 import GestureRecognizer from "react-native-swipe-gestures";
 
+
 const ProductScreen = ({ item, visible, onClose }) => {
   const [visibility, setVisibility] = useState(visible);
   
-
-  console.log(item)
   const closeRequest = () => {
     setVisibility(!visibility);
     onClose()
@@ -52,11 +51,19 @@ const ProductScreen = ({ item, visible, onClose }) => {
                   </Text>
                 </View>
                 <View style={styles.timeContainer}>
-                  <Text style={{fontSize:20}}>11:00</Text>
+                  <Text style={{fontSize:20}}>{item.initial_hour}</Text>
                   <Text style={{fontSize:17}}> a </Text>
-                  <Text style={{fontSize:20}}>17:00</Text>
+                  <Text style={{fontSize:20}}>{item.final_hour}</Text>
                 </View>
               </View>
+              
+              <View>
+                <Text style={{ paddingLeft: 15 }}>{"\n"}Vendido por:</Text>
+                  <Text
+                    style={{ paddingLeft: 30, fontStyle: "italic", fontSize: 20 }}>
+                    {item.user_name}
+                  </Text>
+                </View>
 
               {/*Information Data */}
               <View style={styles.info}>
@@ -111,6 +118,7 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     flex: 1,
     marginTop: 22,
+    width:"80%",
   },
   container: {
     flex: 1,
@@ -134,7 +142,7 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     alignSelf: "center",
     marginBottom: 5,
-    width: 300,
+    width: 200,
     height: 250,
   },
   img: {

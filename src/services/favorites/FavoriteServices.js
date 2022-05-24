@@ -1,7 +1,7 @@
 import { initializeApp } from "firebase/app";
 import { firebaseConfig } from "../../../firebase-config";
 
-import { collection, query, where, getDocs, setDoc, doc, addDoc, updateDoc, arrayUnion} from "firebase/firestore";
+import { collection, query, where, getDocs, setDoc, doc, addDoc, updateDoc, arrayUnion, arrayRemove} from "firebase/firestore";
 
 import { getFirestore } from "firebase/firestore";
 
@@ -25,15 +25,21 @@ export async function createFavorite(userId){
 
 }
 
-export async function updateFavorite(productId){
+export async function updateFavorite(productId,exists){
   const userId = auth.currentUser.uid
   const q = query(collection(db, "favoritos"), where("user_id", "==" , userId))
   const querySnap = await getDocs(q)
   querySnap.forEach((i) =>{
     const ref = doc(db, "favoritos",i.id);
-    updateDoc(ref,{
-      favorites: arrayUnion(productId)
-    })
+    if(exists){
+      updateDoc(ref,{
+        favorites: arrayRemove(productId)
+      })
+    }else {
+      updateDoc(ref,{
+        favorites: arrayUnion(productId)
+      })
+    }
   })
 }
 

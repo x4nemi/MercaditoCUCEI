@@ -9,11 +9,12 @@ import {
   Platform,
 } from "react-native";
 import MaterialCommunityIcons from "react-native-vector-icons/Ionicons";
-import React from "react";
+import React, { useState } from "react";
 
 import { updateFavorite } from "../services/favorites/FavoriteServices";
 
-const ProductCard = ({ item, onPress, backgroundColor, isFav }) => {
+const ProductCard = ({ item, onPress, backgroundColor, isFav, onStore }) => {
+  const[fav,setFav] = useState(isFav)
   return (
     <View style={boxes.main}>
       {/*Card*/}
@@ -44,20 +45,25 @@ const ProductCard = ({ item, onPress, backgroundColor, isFav }) => {
                     {item.available == true ? "Disponible" : "Agotado"}
                   </Text>
                 </View>
-                <View style={{ paddingHorizontal: 5 }}>
-                  <TouchableOpacity onPress={() => updateFavorite(item.id)}>
+                {!onStore && <View style={{ paddingHorizontal: 5 }}>
+                  <TouchableOpacity onPress={() => {
+                      console.log("Icon Pressed")
+                      updateFavorite(item.id,fav)
+                      setFav(!fav)
+                    }
+                  }>
                     {/*Agregar onPress para añadir productos a favoritos*/}
                     <MaterialCommunityIcons
-                      name={isFav? "heart" :"heart-outline"}
+                      name={fav? "heart" :"heart-outline"}
                       size={15}
-                      color={isFav? "red" :"black"}
+                      color={fav? "red" :"black"}
                     />
                   </TouchableOpacity>
-                </View>
+                </View>}
               </View>
               {/*Descripción del Producto */}
               <View style={boxes.description}>
-                <Text style={{ fontSize: 9, color: "grey" }}>
+                <Text style={{ fontSize: 9, color: "gray" }}>
                   {item.description}
                 </Text>
               </View>

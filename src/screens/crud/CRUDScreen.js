@@ -150,6 +150,7 @@ export default function CRUDScreen({ navigation }) {
         initial_hour: hourInitial + ":" + initialMinute,
         final_hour: hourFinal + ":" + finalMinute,
         user_id: auth.currentUser.uid,
+        user_name: auth.currentUser.displayName,
       };
 
       console.log(productAux);
@@ -193,7 +194,8 @@ export default function CRUDScreen({ navigation }) {
       setImage(result.uri);
       const storage = getStorage(); //Storage itself
 
-      const refe = ref(storage, "image.jpg"); //how the image will be addressed inside the storage
+      const direction = "images/" + auth.currentUser.displayName + parseInt(Math.floor(Math.random() * 50));
+      const refe = ref(storage, "direction"); //how the image will be addressed inside the storage
 
       const img = await fetch(result.uri);
       const bytes = await img.blob();
@@ -243,7 +245,7 @@ export default function CRUDScreen({ navigation }) {
           </Text>
         </TouchableOpacity>
         {image && (
-          <Image source={{ uri: image }} style={{ width: 100, height: 100 }} />
+          <Image source={{ uri: image }} style={{ width: 100, height: 100, alignSelf:"center" }} />
         )}
         {/*Contenedor para horario*/}
         <View
@@ -335,7 +337,7 @@ export default function CRUDScreen({ navigation }) {
               onPress={() => {
                 setSelectionMa(!isSelectedMa);
               }}
-              color="#00cfeb"
+              color="#4ade80"
             />
             <Text style={{ alignSelf: "center" }}>Martes</Text>
             <Checkbox

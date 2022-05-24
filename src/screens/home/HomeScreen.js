@@ -11,7 +11,6 @@ import ProductScreen from "../product/ProductScreen";
 import { getProducts } from "../../services/product/ProductServices";
 import { getFavorites } from "../../services/favorites/FavoriteServices";
 
-
 const initProduct = {
   name: "",
   location: "",
@@ -20,31 +19,26 @@ const initProduct = {
   price: 0,
 };
 
-export default function Home({ navigation }) {
+export default function Home({ navigation}) {
   const [productosData, setProductos] = useState([]);
   const [favorites, setFavorites] = useState([]);
 
-  const [selectedId, setSelectedId] = useState(null);
   const [product, setProduct] = useState(initProduct);
 
   const [openModal, setOpenModal] = useState(false);
 
   async function fetchProducts() {
-    console.log("Fetching Products");
     setProductos(await getProducts());
     setFavorites(await getFavorites());
   }
 
   //Render Card(Cambiar on Press a Detalles wdel producto)
   const renderCard = ({ item }) => {
-    const backgroundColor = item.id === selectedId ? "#d1d5db" : "white";
     let auxFav = false;
-    if (favorites.length != 0){
-        favorites.find((i) =>{
-        if(i == item.id){
-          auxFav = true
-        }
-      })
+    if (favorites.length != 0) {
+      if (favorites.lastIndexOf(item.id) != -1){
+        auxFav = true;
+      }  
     }
     return (
       <ProductCard
@@ -53,8 +47,9 @@ export default function Home({ navigation }) {
           setProduct(item);
           onCardPress();
         }}
-        backgroundColor={{ backgroundColor }}
+        backgroundColor={{ backgroundColor:"#d1d5db" }}
         isFav={auxFav}
+        onStore={false}
       />
     );
   };
@@ -69,6 +64,7 @@ export default function Home({ navigation }) {
     setOpenModal(false);
   };
 
+  
   useEffect(async () => {
     await fetchProducts();
   }, []);

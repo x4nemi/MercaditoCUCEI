@@ -14,7 +14,6 @@ import {
 
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { updateU } from "../../services/user/UserService";
-import reactDom from "react-dom";
 
 function ProfileScreen() {
   //Auth
