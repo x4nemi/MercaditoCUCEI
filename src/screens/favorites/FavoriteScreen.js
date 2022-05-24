@@ -1,108 +1,113 @@
-import {
-    View,
-    StyleSheet,
-    SafeAreaView,
-    Text,
-    FlatList,
-    ScrollView,
-    StatusBar,
-    Button,
-    TouchableHighlight, 
-  } from "react-native";
-  import {useState, useEffect} from "react";
-  import BuscarBar from "../../components/SearchBar";
+import { View, Text, SafeAreaView, ScrollView, FlatList } from "react-native";
+  import {useState, useEffect, useCallback} from "react";
   
   //Productos
-  import { productosInventados } from "../../components/ProductosCard";
-  import ProductoCard from "../../components/ProductCard";
+  import ProductCard from "../../components/ProductCard";
+  import BuscarBar from "../../components/SearchBar"
+  import ProductScreen from "../product/ProductScreen";
   
   //Product Service
   import { getProducts } from "../../services/product/ProductServices";
+  import { getFavorites } from "../../services/favorites/FavoriteServices";
   
-  const FavScreen = ({ navigation }) => {
-    async function fetchProducts() {
-      setProductos(await getProducts())
-    }
-    
+  const initProduct = {
+    name: "",
+    location: "",
+    description: "",
+    available: false,
+    price: 0,
+  };
+const FavScreen = ({ navigation }) => {
     const [productosData, setProductos] = useState([]);
-    const [selectedId, setSelectedId] = useState(null);
+    const [favorites, setFavorites] = useState([]);
   
-    //Render Card(Cambiar onPress a Editar Producto)
+    const [selectedId, setSelectedId] = useState(null);
+    const [product, setProduct] = useState(initProduct);
+  
+    const [openModal, setOpenModal] = useState(false);
+  
+    async function fetchProducts() {
+      console.log("Fetching Products");
+      setProductos(await getProducts());
+      setFavorites(await getFavorites());
+      setTimeout(await filterProducts,4000);
+    }
+  
+    //Render Card(Cambiar on Press a Detalles wdel producto)
     const renderCard = ({ item }) => {
       const backgroundColor = item.id === selectedId ? "#d1d5db" : "white";
       return (
-        <ProductoCard
-          item={item}
-          onPress={() => setSelectedId(item.id)}
+        <ProductCard
+          item={{ ...item, id: item.id }}
+          onPress={async () => {
+            setProduct(item);
+            onCardPress();
+            console.log(favorites)
+          }}
           backgroundColor={{ backgroundColor }}
+          isFav={true}
         />
       );
     };
   
-    useEffect(async () => {
-      await fetchProducts();
-    },[]);
+    //Card Press
+    const onCardPress = () => {
+      setOpenModal(true);
+    };
   
+    //Modal Close
+    const onModalClose = () => {
+      setOpenModal(false);
+    };
+  
+    //Filter Favorites
+    const filterProducts = ()=>{
+      // setProductos([productosData.filter((i) => {
+      //   console.log(i)
+      //   if(favorites.lastIndexOf(i.id) != -1 )
+      //     return true
+      //   return false
+      // })])
+    }
+    useEffect(async () => {
+      await fetchProducts(); 
+    }, []);
+    //Render Home
     return (
-      <SafeAreaView style={styles.container}>
-        {/* Header */}
+      <ScrollView style={{ backgroundColor: "#eee", flex: 1 }}>
         <View style={{ backgroundColor: "white", padding: 15 }}>
+          {/* <HeaderTabs /> */}
           <BuscarBar />
         </View>
-        {/*Botones Añadir y Eliminar*/}
-        <View style={{ marginBottom: 10 }}>
-          
-          <TouchableHighlight style={styles.button} >
-            <View >
-              <Text style={{fontSize:18}}>Añadir Producto</Text>
-            </View>
-          </TouchableHighlight>
-          
-            {/* <Button
-            style={{alignItems:"center",borderRadius: 20,alignSelf: "baseline",}}
-            title="Añadir Producto"
-            color="##15803d"
-            onPress={() => Alert.alert('Button with adjusted color pressed')}
-            /> */}
-  
-        </View>
-        {/*Card List*/}
+        {/*Listas no deben estar denro de un scroll view */}
         <View
           showsVerticalScrollIndicator={false}
           style={{ backgroundColor: "#eee" }}
         >
+          <Text
+            style={{
+              fontSize: 30,
+              fontWeight: "bold",
+              color: "#44403c",
+              alignSelf: "center",
+            }}
+          >
+            Favoritos
+          </Text>
           <FlatList
             data={productosData}
             renderItem={renderCard}
             keyExtractor={(item) => item.id}
-            extraData={selectedId}
           />
         </View>
-        {/* NavBar */}
-      </SafeAreaView>
+        {openModal && (
+          <ProductScreen
+            item={product}
+            visible={openModal}
+            onClose={onModalClose}
+          />
+        )}
+      </ScrollView>
     );
-  };
-  
-  const styles = StyleSheet.create({
-    container: {
-      backgroundColor: "#eee",
-      flex: 1,
-      marginTop: StatusBar.currentHeight || 0,
-    },
-    header: {
-      flexDirection: "row",
-      width: "100%",
-    },
-    button: {
-      marginTop: 20,
-      alignItems: "center",
-      backgroundColor: "#4ade80",
-      padding: 20,
-      paddingHorizontal: 75,
-      borderRadius: 20,
-      alignSelf: "center", 
-    },
-  });
-  
+  }
   export default FavScreen;
-  

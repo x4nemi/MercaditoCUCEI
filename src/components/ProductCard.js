@@ -11,7 +11,9 @@ import {
 import MaterialCommunityIcons from "react-native-vector-icons/Ionicons";
 import React from "react";
 
-const ProductoCard = ({ item, onPress, backgroundColor }) => {
+import { updateFavorite } from "../services/favorites/FavoriteServices";
+
+const ProductCard = ({ item, onPress, backgroundColor, isFav }) => {
   return (
     <View style={boxes.main}>
       {/*Card*/}
@@ -43,12 +45,12 @@ const ProductoCard = ({ item, onPress, backgroundColor }) => {
                   </Text>
                 </View>
                 <View style={{ paddingHorizontal: 5 }}>
-                  <TouchableOpacity>
+                  <TouchableOpacity onPress={() => updateFavorite(item.id)}>
                     {/*Agregar onPress para añadir productos a favoritos*/}
                     <MaterialCommunityIcons
-                      name="heart-outline"
+                      name={isFav? "heart" :"heart-outline"}
                       size={15}
-                      color="black"
+                      color={isFav? "red" :"black"}
                     />
                   </TouchableOpacity>
                 </View>
@@ -110,4 +112,4 @@ const boxes = StyleSheet.create({
   },
 });
 
-export default ProductoCard;
+export default ProductCard;
