@@ -59,7 +59,7 @@ function Panels({ navigation }) {
             iconName = focused ? "chatbubble" : "chatbubble-outline";
           } else if (rn === "Tienda") {
             iconName = focused ? "briefcase" : "briefcase-outline";
-          } else if(rn == "Fav") {
+          } else if (rn == "Fav") {
             iconName = focused ? "heart" : "heart-outline";
           } else {
             iconName = focused ? "person-circle" : "person-circle-outline";
@@ -96,13 +96,17 @@ export default function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator
-        initialRouteName={"Login"}
+        initialRouteName={"Panels"}
         screenOptions={({ route }) => ({
           headerShown: false,
         })}
       >
         <Stack.Screen name="Panels" component={Panels} />
-        <Stack.Screen name="Aviso" component={TermsScreen} options={{ headerShown: true }}/>
+        <Stack.Screen
+          name="Aviso"
+          component={TermsScreen}
+          options={{ headerShown: true }}
+        />
         <Stack.Screen name="Login" component={LoginScreen} />
         {/* <Stack.Screen name="Hola" component={CRUDScreen} /> */}
       </Stack.Navigator>

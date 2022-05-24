@@ -16,6 +16,7 @@ import { collection, addDoc } from "firebase/firestore";
 import { initializeApp } from "firebase/app";
 import { firebaseConfig } from "../../../firebase-config";
 import { getAuth } from "firebase/auth";
+import { useNavigation } from "@react-navigation/native";
 
 const app = initializeApp(firebaseConfig);
 const database = getFirestore();
@@ -54,6 +55,7 @@ const initProduct = {
 };
 
 export default function CRUDScreen() {
+  const navigation = useNavigation();
   //Input para nombre
   const [product, setProduct] = useState(initProduct);
   const [productName, setProductName] = useState("");
@@ -153,10 +155,13 @@ export default function CRUDScreen() {
       };
       console.log(productAux);
       setFlag(true);
+      onSend(productAux);
+      alert("Se ha creado el producto");
+      navigation.navigate("Home");
     }
   };
 
-  const onSend = async () => {
+  const onSend = async (product) => {
     await addDoc(collection(database, "product"), product);
   };
 
