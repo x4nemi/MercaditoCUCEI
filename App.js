@@ -56,7 +56,7 @@ function Panels({ navigation }) {
           if (rn === "Home") {
             iconName = focused ? "home" : "home-outline";
           } else if (rn === "CRUD") {
-            iconName = focused ? "chatbubble" : "chatbubble-outline";
+            iconName = focused ? "add-circle" : "add-circle-outline";
           } else if (rn === "Tienda") {
             iconName = focused ? "briefcase" : "briefcase-outline";
           } else if (rn == "Fav") {

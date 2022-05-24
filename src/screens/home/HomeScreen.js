@@ -1,5 +1,4 @@
-//Si posición es fixed, se requiere react-native-web
-//Ver como hacerle para que la navbar se coloque bien
+//Refresh en la FlatList
 import { View, Text, SafeAreaView, ScrollView, FlatList } from "react-native";
 import {useState, useEffect} from "react";
 
@@ -39,8 +38,8 @@ export default function Home({ navigation }) {
       <ProductoCard
         item={item}
         onPress={() =>{
-          onCardPress()
           setProduct(item)
+          onCardPress()
         }}
         backgroundColor={{ backgroundColor }}
       />
@@ -62,7 +61,7 @@ export default function Home({ navigation }) {
   },[]);
   //Render Home
   return (
-    <View style={{ backgroundColor: "#eee", flex: 1 }}>
+    <ScrollView style={{ backgroundColor: "#eee", flex: 1 }}>
       <View style={{ backgroundColor: "white", padding: 15 }}>
         {/* <HeaderTabs /> */}
         <BuscarBar />
@@ -84,6 +83,6 @@ export default function Home({ navigation }) {
         visible={openModal}
         onClose={onModalClose}
       />}
-    </View>
+    </ScrollView>
   );
 }

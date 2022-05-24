@@ -18,6 +18,7 @@ import { firebaseConfig } from "../../../firebase-config";
 import { getAuth } from "firebase/auth";
 import { useNavigation } from "@react-navigation/native";
 
+
 const app = initializeApp(firebaseConfig);
 const database = getFirestore();
 const auth = getAuth();
@@ -40,42 +41,44 @@ let hourList = [
   "21",
 ];
 let minuteList = ["00", "10", "20", "30", "40", "50"];
-const initSchedule = {
-  days: [],
-  initial_hour: "00:00",
-  final_hour: "00:01",
-};
+
 
 const initProduct = {
   name: "",
   description: "",
   price: "",
-  schedule: initSchedule,
-  places: [],
+  location: "",
 };
 
-export default function CRUDScreen() {
+export default function CRUDScreen({item}) {
   const navigation = useNavigation();
-  //Input para nombre
+  //Inputs
   const [product, setProduct] = useState(initProduct);
   const [productName, setProductName] = useState("");
   const [description, setDescription] = useState("");
   const [price, setPrice] = useState("");
   const [places, setPlaces] = useState("");
 
-  const [schedule, setSchedule] = useState(initSchedule);
 
   const selectionedDays = [];
+  //Hours
   const [hourInitial, setHourInitial] = useState("");
   const [initialMinute, setInitialMinute] = useState("");
   const [hourFinal, setHourFinal] = useState("");
   const [finalMinute, setFinalMinute] = useState("");
+  //CheckBox
+  const [isSelectedL, setSelectionL] = useState(false);
+  const [isSelectedMa, setSelectionMa] = useState(false);
+  const [isSelectedMi, setSelectionMi] = useState(false);
+  const [isSelectedJ, setSelectionJ] = useState(false);
+  const [isSelectedV, setSelectionV] = useState(false);
+  const [isSelectedS, setSelectionS] = useState(false);
+
+  const[isAvailable, setAvailable] = useState(false)
 
   const [flag, setFlag] = useState(false);
 
   const handleValidationProduct = () => {
-    console.log("Entro");
-
     if (
       hourInitial == "" ||
       hourFinal == "" ||
@@ -136,46 +139,35 @@ export default function CRUDScreen() {
         selectionedDays.push("Sábado");
       }
 
-      const scheduleAux = {
-        days: selectionedDays,
-        initial_hour: hourInitial + ":" + initialMinute,
-        final_hour: hourFinal + ":" + finalMinute,
-      };
-      console.log(scheduleAux);
-      setSchedule(scheduleAux);
-
-      const p = places.split(",") || places.split(", ");
+      const p = places
 
       const productAux = {
         name: productName,
         description: description,
         price: price,
-        schedule: scheduleAux,
-        places: p,
+        location: p,
+        available: isAvailable,
+        days: selectionedDays,
+        initial_hour: hourInitial + ":" + initialMinute,
+        final_hour: hourFinal + ":" + finalMinute,
+        user_id: auth.currentUser.uid,
       };
+      
       console.log(productAux);
       setFlag(true);
       onSend(productAux);
-      alert("Se ha creado el producto");
+      alert("Se ha enviado el producto!");
       navigation.navigate("Home");
     }
   };
 
   const onSend = async (product) => {
-    await addDoc(collection(database, "product"), product);
+    await addDoc(collection(database, "productos"), product);
   };
-
-  //Checkboxes
-  const [isSelectedL, setSelectionL] = useState(false);
-  const [isSelectedMa, setSelectionMa] = useState(false);
-  const [isSelectedMi, setSelectionMi] = useState(false);
-  const [isSelectedJ, setSelectionJ] = useState(false);
-  const [isSelectedV, setSelectionV] = useState(false);
-  const [isSelectedS, setSelectionS] = useState(false);
+  
 
   return (
-    <ScrollView>
-      <SafeAreaView style={{ backgroundColor: "white" }}>
+    <ScrollView style={{backgroundColor:"white"}}>
         <View style={styles.container}>
           {/*Nombre, descripción y precio del producto*/}
           <Text style={styles.text}>Nombre del producto:</Text>
@@ -196,6 +188,16 @@ export default function CRUDScreen() {
             value={price}
             onChangeText={setPrice}
           />
+          <View style={{flex:2, flexDirection:"row", alignSelf:"center"}}>
+            <Checkbox
+              status={isAvailable ? "checked" : "unchecked"}
+              onPress={() => {
+                setAvailable(!isAvailable);
+              }}
+              color="#00cfeb"
+                />
+            <Text style={{ alignSelf: "center" }}>Disponible</Text>
+          </View>
           {/* <Text>
             {productName} {price} {description}
           </Text> */}
@@ -383,9 +385,9 @@ export default function CRUDScreen() {
             style={styles.button}
             onPress={handleValidationProduct}
           >
-            <Text style={{ fontWeight: "600" }}>Validar Producto</Text>
+            <Text style={{ fontWeight: "600" }}>Publicar Producto</Text>
           </TouchableOpacity>
-          <TouchableOpacity
+          {/* <TouchableOpacity
             style={{
               width: 250,
               height: 40,
@@ -404,9 +406,8 @@ export default function CRUDScreen() {
             <Text style={{ fontWeight: "600", color: flag ? "black" : "#999" }}>
               Publicar Producto
             </Text>
-          </TouchableOpacity>
+          </TouchableOpacity> */}
         </View>
-      </SafeAreaView>
     </ScrollView>
   );
 }

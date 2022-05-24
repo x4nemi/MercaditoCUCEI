@@ -80,7 +80,7 @@ function ProfileScreen() {
             style={styles.profilePicture}
           />
           <Text style={{ fontWeight: "600", fontSize: 30 }}>
-            {currentUser.displayName}
+            {currentUser.displayName ?? "Usuario"}
           </Text>
         </View>
       </View>

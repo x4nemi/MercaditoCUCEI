@@ -13,6 +13,7 @@ import GestureRecognizer from "react-native-swipe-gestures";
 
 const ProductScreen = ({ item, visible, onClose }) => {
   const [visibility, setVisibility] = useState(visible);
+  
 
   console.log(item)
   const closeRequest = () => {

@@ -1,3 +1,5 @@
+//Ver hora y disponibilidad acorde al dia
+//Dia ver si esta mejor el dia
 import {
   View,
   Text,
