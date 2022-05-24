@@ -8,50 +8,77 @@ import {
   StatusBar,
   Button,
   TouchableHighlight,
+  Modal
 } from "react-native";
-import {useState, useEffect} from "react";
+import { useState, useEffect } from "react";
 import BuscarBar from "../../components/SearchBar";
 
 //Productos
-import { productosInventados } from "../../components/ProductosCard";
 import ProductoCard from "../../components/ProductCard";
 
 //Product Service
 import { getProducts } from "../../services/product/ProductServices";
+import CRUDModal from "../../components/CRUDModal";
+
+const initProduct = {
+  name: "",
+  location: "",
+  description: "",
+  image: "",
+  available: false,
+  price: 0,
+  days: [],
+  final_hour: "",
+  initial_hour: "",
+};
 
 const Store = ({ navigation }) => {
   async function fetchProducts() {
-    setProductos(await getProducts())
+    setProductos(await getProducts());
   }
-  
+
   const [productosData, setProductos] = useState([]);
   const [selectedId, setSelectedId] = useState(null);
+
+  const [selectedProduct, setSelectedProduct] = useState();
+  const [openCRUD, setOpenCRUD] = useState(false);
 
   //Render Card(Cambiar onPress a Editar Producto)
   const renderCard = ({ item }) => {
     const backgroundColor = item.id === selectedId ? "#d1d5db" : "white";
     return (
       <ProductoCard
-        item={item}
-        onPress={() => setSelectedId(item.id)}
+        item={{...item,id:item.id}}
+        onPress={() => {
+          setSelectedProduct(item);
+          onCardPress();
+        }}
         backgroundColor={{ backgroundColor }}
       />
     );
   };
 
+  const onCardPress = () => {
+    setOpenCRUD(true);
+  };
+
+  const onCRUDClose = () =>{
+    setOpenCRUD(false)
+  }
+
   useEffect(async () => {
     await fetchProducts();
-  },[]);
+  }, []);
 
   return (
-    <SafeAreaView style={styles.container}>
+    <ScrollView style={styles.container}>
       {/* Header */}
       <View style={{ backgroundColor: "white", padding: 15 }}>
         <BuscarBar />
       </View>
       {/*Botones Añadir y Eliminar*/}
       <View style={{ marginBottom: 10 }}>
-        <TouchableHighlight style={styles.button}>
+        <TouchableHighlight style={styles.button} onPress={() => navigation.navigate("CRUD")}>
           <View>
             <Text style={{ fontSize: 18 }}>Añadir Producto</Text>
           </View>
@@ -76,8 +103,15 @@ const Store = ({ navigation }) => {
           extraData={selectedId}
         />
       </View>
-      {/* NavBar */}
-    </SafeAreaView>
+      {openCRUD &&
+        <CRUDModal
+          item={selectedProduct}
+          visible={openCRUD}
+          onClose={onCRUDClose}
+        />
+      }
+      
+    </ScrollView>
   );
 };
 

@@ -17,13 +17,10 @@ const currentUser = auth.currentUser;
 
 export async function updateU(Nemail, Npassword, name) {
   let newUser = {};
-  if(Nemail != "")
-    newUser = {...newUser, email:Nemail}
-  if(Npassword != "")
-    newUser = {...newUser, password:Npassword}
-  if(name != "")
-    newUser = {...newUser, displayName:name}
-  console.log(newUser)
+  if (Nemail != "") newUser = { ...newUser, email: Nemail };
+  if (Npassword != "") newUser = { ...newUser, password: Npassword };
+  if (name != "") newUser = { ...newUser, displayName: name };
+  console.log(newUser);
   const uid = auth.currentUser.uid;
   updateProfile(auth.currentUser, newUser)
     .then(() => {
@@ -31,7 +28,7 @@ export async function updateU(Nemail, Npassword, name) {
       // querySnapshot.forEach((doc) =>{
       //   await setDoc(doc()){}
       // })
-      Alert.alert("Aviso","Se actualizó con exito al usuario")
+      alert("Se actualizó con exito al usuario");
     })
     .catch((error) => {
       console.log(error);
