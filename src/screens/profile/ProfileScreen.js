@@ -1,136 +1,192 @@
-import React from "react";
-import { View, Text, StyleSheet, TouchableOpacity, StatusBar, Image, TextInput, ScrollView, SafeAreaView } from "react-native";
+import { useState } from "react";
+import { useNavigation } from "@react-navigation/native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  StatusBar,
+  Image,
+  TextInput,
+  ScrollView,
+  SafeAreaView,
+} from "react-native";
 
 import { getAuth, onAuthStateChanged } from "firebase/auth";
-
+import { updateU } from "../../services/user/UserService";
 
 function ProfileScreen() {
+  //Auth
   const auth = getAuth();
-  const currentUser = auth.currentUser
+  const currentUser = auth.currentUser;
+
   //States
-  const [email, setEmail] = React.useState("ejemplo@alumnos.udg.mx");
-  const [name, setName] = React.useState("Invitado");
-  const [password, setPassword] = React.useState("********");
+  const [email, setEmail] = useState("");
+  const [name, setName] = useState("");
+  const [password, setPassword] = useState("");
 
-  const[showCancel,setShowCancel] = React.useState(false)
+  const [existChanges, setExistChanges] = useState(false);
+  const [showCancel, setShowCancel] = useState(false);
+  const navigation = useNavigation();
 
-  const onCancel = () =>{
+  //On Press Cancel Button
+  const onCancel = () => {
     setShowCancel(false);
-    console.log(showCancel)
-  }
+    setEmail("");
+    setName("");
+    setPassword("");
+  };
 
-  return( 
+  const LogOut = () => {
+    auth.signOut();
+    navigation.navigate("Login");
+  };
+
+  return (
     <ScrollView style={styles.main}>
       {/*Header*/}
       <View style={styles.header}>
-        <View style = {{flexDirection:"row-reverse"}}>
-          <TouchableOpacity style={[styles.button,{marginRight:10}]}>
-            <Text style={styles.buttonText}>Cerrar Sesión</Text>
+        <View style={{ flexDirection: "row-reverse" }}>
+          <TouchableOpacity style={[styles.button, { marginRight: 10 }]}>
+            <Text onPress={LogOut} style={styles.buttonText}>
+              Cerrar Sesión
+            </Text>
           </TouchableOpacity>
         </View>
         {/*Profile Pic */}
-        <View style= {styles.container}>
-          <Image source= {{uri: "https://i.pinimg.com/originals/51/f6/fb/51f6fb256629fc755b8870c801092942.png"}}
-          style={styles.profilePicture}/>
-          <Text style= {{fontWeight: "600", fontSize: 30}}>{name}</Text>
+        <View style={styles.container}>
+          <Image
+            source={{
+              uri: "https://i.pinimg.com/originals/51/f6/fb/51f6fb256629fc755b8870c801092942.png",
+            }}
+            style={styles.profilePicture}
+          />
+          <Text style={{ fontWeight: "600", fontSize: 30 }}>
+            {currentUser.displayName}
+          </Text>
         </View>
       </View>
       {/**Form*/}
       <View style={styles.form}>
         {/**Nombre */}
         <View>
-          <Text style={styles.formText}>
-            Nombre
-          </Text>
+          <Text style={styles.formText}>Nombre</Text>
           <TextInput
             onChangeText={(text) => {
               setName(text);
-              if(text != "") 
-                setShowCancel(true)}}
+              setExistChanges(true);
+              if (text != "") setShowCancel(true);
+            }}
+            value={name}
             style={styles.input}
-            placeholder={"Nombre del Usuario"}
+            placeholder={currentUser.displayName ?? "Nombre del Usuario"}
             autoComplete={"name"}
           />
         </View>
         {/**Email */}
         <View>
-          <Text style={styles.formText}>
-            E-mail
-          </Text>
+          <Text style={styles.formText}>E-mail</Text>
           <TextInput
-            onChangeText={(text) => {setEmail(text); setShowCancel(true)}}
+            onChangeText={(text) => {
+              setEmail(text);
+              if (text != "") setShowCancel(true);
+              setExistChanges(true);
+            }}
+            value={email}
             style={styles.input}
-            placeholder={email}
+            placeholder={currentUser.email ?? "Correo Electronico"}
             autoComplete={"email"}
           />
         </View>
         {/**Password */}
         <View>
-          <Text style={styles.formText}>
-            Contraseña
-          </Text>
+          <Text style={styles.formText}>Contraseña</Text>
           <TextInput
-            onChangeText={(text) => {setPassword(text); setShowCancel(true)}}
+            onChangeText={(text) => {
+              setPassword(text);
+              if (text != "") setShowCancel(true);
+              setExistChanges(true);
+            }}
+            value={password}
             style={styles.input}
-            placeholder="contraseña"
+            placeholder="******"
             secureTextEntry={true}
           />
         </View>
         {/**Button Submit */}
-        <View style = {{flexDirection:"row-reverse", justifyContent:"space-between"}}>
-          {showCancel && 
-            <TouchableOpacity style={styles.button}
-            onPress={onCancel}>
+        <View
+          style={{
+            flexDirection: "row-reverse",
+            justifyContent: "space-between",
+          }}
+        >
+          {showCancel && (
+            <TouchableOpacity style={styles.button} onPress={onCancel}>
               <Text style={styles.buttonText}>Cancelar</Text>
-            </TouchableOpacity>}
-          <TouchableOpacity style={styles.button}>
+            </TouchableOpacity>
+          )}
+          <TouchableOpacity
+            disabled={!existChanges}
+            onPress={() => {
+              updateU(email, password, name);
+              LogOut();
+              navigation.navigate("Login");
+            }}
+            style={[
+              styles.button,
+              {
+                backgroundColor: existChanges == false ? "#bae6fd" : "#2563eb",
+              },
+            ]}
+          >
             <Text style={styles.buttonText}>Guardar Cambios</Text>
           </TouchableOpacity>
         </View>
       </View>
-    </ScrollView>);
+    </ScrollView>
+  );
 }
 
 export default ProfileScreen;
 
 const styles = StyleSheet.create({
-  main:{
-    borderRadius:10,
-    backgroundColor:"white",
-    margin:10,
+  main: {
+    borderRadius: 10,
+    backgroundColor: "white",
+    margin: 10,
   },
   header: {
-    backgroundColor:"white",
+    backgroundColor: "white",
     marginTop: StatusBar.currentHeight + 15 || 15,
   },
   button: {
-    backgroundColor:"#2563eb" ,
-    borderRadius:10 ,
-    paddingHorizontal:5,
-    paddingVertical:8,
-    alignItems:"center",
+    backgroundColor: "#2563eb",
+    borderRadius: 10,
+    paddingHorizontal: 5,
+    paddingVertical: 8,
+    alignItems: "center",
   },
-  form:{
-    borderRadius:10,
-    paddingHorizontal:10,
-    paddingTop:5,
-    backgroundColor:"#dcdcdc",
-    paddingBottom:100
+  form: {
+    borderRadius: 10,
+    paddingHorizontal: 10,
+    paddingTop: 5,
+    backgroundColor: "#dcdcdc",
+    paddingBottom: 100,
   },
   buttonText: {
-    fontSize: 17, 
-    fontWeight:"600", 
-    color: "#f1f5f9"
+    fontSize: 17,
+    fontWeight: "600",
+    color: "#f1f5f9",
   },
-  formText:{
-    fontSize: 17, 
-    fontWeight: "bold", 
+  formText: {
+    fontSize: 17,
+    fontWeight: "bold",
     color: "black",
   },
   container: {
-    flex:1, 
-    alignItems:"center", 
-    marginVertical:10,
+    flex: 1,
+    alignItems: "center",
+    marginVertical: 10,
   },
   profilePicture: {
     width: 200,

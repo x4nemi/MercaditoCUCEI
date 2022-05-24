@@ -10,6 +10,7 @@ import {
 } from "react-native";
 import React from "react";
 import { BlurView } from "expo-blur";
+import { updateU } from "../../services/user/UserService";
 
 //FireBase
 import {
@@ -43,13 +44,15 @@ export default function LoginScreen() {
     createUserWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         console.log("Se ha creado la cuenta (-:");
-        const user = userCredential.user;
-        navigation.navigate("Home");
+        navigation.navigate("Panels");
       })
       .catch((error) => {
         console.log(error);
         Alert.alert(error.message);
       });
+      let at = email.lastIndexOf("@")
+      updateU(email,password,aux)
+      let aux = email.slice(0,at)
   };
 
   //Sign In
@@ -58,13 +61,14 @@ export default function LoginScreen() {
       .then((userCredential) => {
         console.log("Se ha Iniciado Sesión (-:");
         const user = userCredential.user;
-        console.log(user.toJSON())
+        console.log(user.displayName);
         navigation.navigate("Panels");
       })
       .catch((error) => {
         alert(error);
         console.log(error);
       });
+    
   };
 
   const toAviso = () => {
@@ -124,10 +128,10 @@ export default function LoginScreen() {
                 Crear Cuenta
               </Text>
             </TouchableOpacity>
-            <TouchableOpacity
-              onPress={toAviso}
-            >
-              <Text style={{textDecorationLine:"underline"}}>Aviso de Privacidad</Text>
+            <TouchableOpacity onPress={toAviso}>
+              <Text style={{ textDecorationLine: "underline" }}>
+                Aviso de Privacidad
+              </Text>
             </TouchableOpacity>
           </View>
         </BlurView>
