@@ -150,6 +150,7 @@ export default function CRUDScreen({item}) {
         days: selectionedDays,
         initial_hour: hourInitial + ":" + initialMinute,
         final_hour: hourFinal + ":" + finalMinute,
+        user_id: auth.currentUser.uid,
       };
       
       console.log(productAux);

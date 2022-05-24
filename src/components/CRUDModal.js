@@ -156,7 +156,8 @@ export default function CRUDModal({ item, visible, onClose }) {
         days: selectionedDays,
         initial_hour: hourInitial + ":" + initialMinute,
         final_hour: hourFinal + ":" + finalMinute,
-        id: item.id
+        id: item.id,
+        user_id: auth.currentUser.uid
       };
       onSubmit(productAux);
       alert("Se han enviado los cambios al producto");
