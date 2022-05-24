@@ -44,9 +44,12 @@ function ProfileScreen() {
     navigation.navigate("Login");
   };
   
+  // Should upload a picture PENDING*****
   const UploadPicture = () => {
-    auth.signOut();
-    navigation.navigate("Login");
+    console.log("Upload Profile Picture");
+    // alert.apply("Upload Profile Picture");
+    // auth.signOut();
+    // navigation.navigate("Login");
   };
   
 
@@ -58,7 +61,7 @@ function ProfileScreen() {
           <View style={{marginLeft: 10}}>
             <TouchableOpacity style={[styles.button, { marginRight: 10 }]}>
               <Text onPress={UploadPicture} style={styles.buttonText}>
-                Profile Picture
+                Sube tu Foto
               </Text>
             </TouchableOpacity>
           </View>
