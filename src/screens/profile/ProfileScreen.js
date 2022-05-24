@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, Alert } from "react";
 import { useNavigation } from "@react-navigation/native";
 import {
   View,
@@ -14,6 +14,7 @@ import {
 
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { updateU } from "../../services/user/UserService";
+import reactDom from "react-dom";
 
 function ProfileScreen() {
   //Auth
@@ -37,22 +38,39 @@ function ProfileScreen() {
     setPassword("");
   };
 
+  // Logout user and sent to login screen
   const LogOut = () => {
     auth.signOut();
     navigation.navigate("Login");
   };
+  
+  const UploadPicture = () => {
+    auth.signOut();
+    navigation.navigate("Login");
+  };
+  
 
   return (
     <ScrollView style={styles.main}>
       {/*Header*/}
       <View style={styles.header}>
-        <View style={{ flexDirection: "row-reverse" }}>
-          <TouchableOpacity style={[styles.button, { marginRight: 10 }]}>
-            <Text onPress={LogOut} style={styles.buttonText}>
-              Cerrar Sesión
-            </Text>
-          </TouchableOpacity>
+        <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+          <View style={{marginLeft: 10}}>
+            <TouchableOpacity style={[styles.button, { marginRight: 10 }]}>
+              <Text onPress={UploadPicture} style={styles.buttonText}>
+                Profile Picture
+              </Text>
+            </TouchableOpacity>
+          </View>
+          <View>
+            <TouchableOpacity style={[styles.button, { marginRight: 10 }]}>
+              <Text onPress={LogOut} style={styles.buttonText}>
+                Cerrar Sesión
+              </Text>
+            </TouchableOpacity>
+          </View>
         </View>
+
         {/*Profile Pic */}
         <View style={styles.container}>
           <Image

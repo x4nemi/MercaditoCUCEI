@@ -1,5 +1,8 @@
 {
   "dependencies": {
+    "@react-native-firebase/app": "^14.9.4",
+    "@react-native-firebase/storage": "^14.9.4",
+    "@react-native-picker/picker": "2.2.1",
     "@react-navigation/bottom-tabs": "^6.3.1",
     "@react-navigation/native": "^6.0.10",
     "@react-navigation/native-stack": "^6.6.2",

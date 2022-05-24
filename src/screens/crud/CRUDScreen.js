@@ -8,7 +8,7 @@ import {
   TextInput,
   SafeAreaView,
 } from "react-native";
-import { Checkbox } from "react-native-paper";
+import { Checkbox } from "react-native";
 import React, { useState } from "react";
 import RNPickerSelect from "react-native-picker-select";
 import { getFirestore } from "firebase/firestore";
