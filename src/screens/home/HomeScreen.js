@@ -39,11 +39,13 @@ export default function Home({ navigation }) {
   const renderCard = ({ item }) => {
     const backgroundColor = item.id === selectedId ? "#d1d5db" : "white";
     let auxFav = false;
-    favorites.find((i) =>{
-      if(i == item.id){
-        auxFav = true
-      }
-    })
+    if (favorites.length != 0){
+        favorites.find((i) =>{
+        if(i == item.id){
+          auxFav = true
+        }
+      })
+    }
     return (
       <ProductCard
         item={{ ...item, id: item.id }}

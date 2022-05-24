@@ -212,7 +212,7 @@ export default function CRUDScreen({navigation}) {
           {/*Contenedor para horario*/}
           <View
             style={{
-              borderColor: "#00cfeb60",
+              borderColor: "#4ade80",
               borderWidth: 2,
               borderRadius: 7,
               padding: 3,
@@ -291,7 +291,7 @@ export default function CRUDScreen({navigation}) {
                 onPress={() => {
                   setSelectionL(!isSelectedL);
                 }}
-                color="#00cfeb"
+                color="#4ade80"
               />
               <Text style={{ alignSelf: "center" }}>Lunes</Text>
               <Checkbox
@@ -307,7 +307,7 @@ export default function CRUDScreen({navigation}) {
                 onPress={() => {
                   setSelectionMi(!isSelectedMi);
                 }}
-                color="#00cfeb"
+                color="#4ade80"
               />
               <Text style={{ alignSelf: "center" }}>Miércoles</Text>
             </View>
@@ -317,7 +317,7 @@ export default function CRUDScreen({navigation}) {
                 onPress={() => {
                   setSelectionJ(!isSelectedJ);
                 }}
-                color="#00cfeb"
+                color="#4ade80"
               />
               <Text style={{ alignSelf: "center" }}>Jueves</Text>
               <Checkbox
@@ -325,7 +325,7 @@ export default function CRUDScreen({navigation}) {
                 onPress={() => {
                   setSelectionV(!isSelectedV);
                 }}
-                color="#00cfeb"
+                color="#4ade80"
               />
               <Text style={{ alignSelf: "center" }}>Viernes</Text>
               <Checkbox
@@ -333,7 +333,7 @@ export default function CRUDScreen({navigation}) {
                 onPress={() => {
                   setSelectionS(!isSelectedS);
                 }}
-                color="#00cfeb"
+                color="#4ade80"
               />
               <Text style={{ alignSelf: "center" }}>Sábado</Text>
             </View>
@@ -399,7 +399,7 @@ const styles = StyleSheet.create({
     width: 250,
     height: 40,
     borderRadius: 10,
-    backgroundColor: "#00cfeb",
+    backgroundColor: "#4ade80",
     alignSelf: "center",
     alignItems: "center",
     justifyContent: "center",

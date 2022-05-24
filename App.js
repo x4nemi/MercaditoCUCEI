@@ -72,8 +72,9 @@ function Panels({ navigation }) {
         },
       })}
       tabBarOptions={{
-        activeTintColor: "#2563eb",
+        activeTintColor: "#f59e0b",
         inactiveTintColor: "#6b7280",
+
         labelStyle: { fontSize: 10 },
         style: { padding: 10, height: 70 },
       }}
@@ -103,7 +104,7 @@ export default function App() {
       >
         <Stack.Screen name="Panels" component={Panels} />
         <Stack.Screen
-          name="Aviso"
+          name="Aviso de privacidad"
           component={TermsScreen}
           options={{ headerShown: true }}
         />

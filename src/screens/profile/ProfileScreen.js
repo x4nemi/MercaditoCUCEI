@@ -153,7 +153,7 @@ function ProfileScreen() {
             style={[
               styles.button,
               {
-                backgroundColor: existChanges == false ? "#bae6fd" : "#2563eb",
+                backgroundColor: existChanges == false ? "#a7f3d0" : "#4ade80",
               },
             ]}
           >
@@ -178,7 +178,7 @@ const styles = StyleSheet.create({
     marginTop: StatusBar.currentHeight + 15 || 15,
   },
   button: {
-    backgroundColor: "#2563eb",
+    backgroundColor: "#4ade80",
     borderRadius: 10,
     paddingHorizontal: 5,
     paddingVertical: 8,
@@ -194,7 +194,7 @@ const styles = StyleSheet.create({
   buttonText: {
     fontSize: 17,
     fontWeight: "600",
-    color: "#f1f5f9",
+    color: "#111827",
   },
   formText: {
     fontSize: 17,

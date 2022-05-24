@@ -26,7 +26,7 @@ import { firebaseConfig } from "../../../firebase-config";
 import { useNavigation } from "@react-navigation/native";
 
 const wallpaper =
-  "https://cdn.ipadizate.com/2020/08/iOS-14-promotional-gradients-iphone-wallpaper-ar72014-idownloadblog-1.jpeg";
+  "https://media.discordapp.net/attachments/935321362891948034/966202380435718195/backgroud.png?width=311&height=670";
 
 export default function LoginScreen() {
   //States
@@ -76,7 +76,7 @@ export default function LoginScreen() {
   };
 
   const toAviso = () => {
-    navigation.push("Aviso");
+    navigation.push("Aviso de privacidad");
   };
 
   //CuentaScreen
@@ -98,7 +98,7 @@ export default function LoginScreen() {
       >
         <BlurView intensity={40}>
           <View style={styles.login}>
-            <Image source={require("../../assets/Mercado.png")} 
+            <Image source={require("../../assets/logo2.png")} 
             style={styles.profilePicture} />
 
             <View>
@@ -129,7 +129,7 @@ export default function LoginScreen() {
             </TouchableOpacity>
             <TouchableOpacity
               onPress={handleCreateAccount}
-              style={[styles.button, { backgroundColor: "#6792F090" }]}
+              style={[styles.button, { backgroundColor: "#34d399" }]}
             >
               <Text style={{ fontSize: 17, fontWeight: "400", color: "white" }}>
                 Crear Cuenta
@@ -191,7 +191,7 @@ const styles = StyleSheet.create({
     width: 250,
     height: 40,
     borderRadius: 10,
-    backgroundColor: "#00cfeb90",
+    backgroundColor: "#10b981",
     alignItems: "center",
     justifyContent: "center",
     marginVertical: 10,

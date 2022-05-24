@@ -39,6 +39,7 @@ export async function updateFavorite(productId){
 
 export async function getFavorites(){
   let favs = []
+  console.log("fetching favorites")
   const userId = auth.currentUser.uid
   const q = query(collection(db, "favoritos"), where("user_id", "==" , userId))
   const querySnap = await getDocs(q)
