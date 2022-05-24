@@ -19,7 +19,7 @@ export async function createFavorite(userId){
   console.log(userId)
   const docRef = await addDoc(collection(db, "favoritos"), {
     user_id:userId,
-    products:[],
+    favorites:[],
   });
   console.log(docRef)
 

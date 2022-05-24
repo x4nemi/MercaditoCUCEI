@@ -18,8 +18,8 @@ import { View, Text, SafeAreaView, ScrollView, FlatList } from "react-native";
     price: 0,
   };
 const FavScreen = ({ navigation }) => {
-    const [productosData, setProductos] = useState([]);
-    const [favorites, setFavorites] = useState([]);
+    const [productosData, setProductos] = useState([""]);
+    const [favorites, setFavorites] = useState([""]);
   
     const [selectedId, setSelectedId] = useState(null);
     const [product, setProduct] = useState(initProduct);
@@ -30,7 +30,7 @@ const FavScreen = ({ navigation }) => {
       console.log("Fetching Products");
       setProductos(await getProducts());
       setFavorites(await getFavorites());
-      setTimeout(await filterProducts,4000);
+      filterProducts(await getProducts(),await getFavorites())
     }
   
     //Render Card(Cambiar on Press a Detalles wdel producto)
@@ -61,13 +61,16 @@ const FavScreen = ({ navigation }) => {
     };
   
     //Filter Favorites
-    const filterProducts = ()=>{
-      // setProductos([productosData.filter((i) => {
-      //   console.log(i)
-      //   if(favorites.lastIndexOf(i.id) != -1 )
-      //     return true
-      //   return false
-      // })])
+    const filterProducts =  (f, p)=>{
+      let auxFav = []
+      auxFav = p.filter((i) => {
+        if(f.lastIndexOf(i.id) != -1 )
+          return false
+        return true
+      })
+      console.log(auxFav)
+      setFavorites([...auxFav])
+      console.log(favorites)
     }
     useEffect(async () => {
       await fetchProducts(); 
