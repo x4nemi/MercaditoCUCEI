@@ -73,9 +73,8 @@ export default function CRUDScreen({ navigation }) {
   const [isSelectedS, setSelectionS] = useState(false);
 
   const [isAvailable, setAvailable] = useState(false);
-
+  const [image, setImage] = useState("");
   const [flag, setFlag] = useState(true);
-  const [cadena, setCadena] = useState("");
 
   const handleValidationProduct = () => {
     if (
@@ -141,16 +140,11 @@ export default function CRUDScreen({ navigation }) {
 
       const p = places;
 
-      console.log(image);
-      setCadena(makeid(5));
-      const cadeena = makeid(5);
-      console.log(cadena);
-
       const productAux = {
         name: productName,
         description: description,
         price: price,
-        image: cadeena.concat(".jpg"),
+        image: image,
         location: p,
         available: isAvailable,
         days: selectionedDays,
@@ -161,7 +155,7 @@ export default function CRUDScreen({ navigation }) {
 
       console.log(productAux);
       if (flag) {
-        onSend(productAux, cadeena);
+        onSend(productAux);
         alert("Se ha enviado el producto!");
         navigation.navigate("Home");
       } else {
@@ -170,22 +164,19 @@ export default function CRUDScreen({ navigation }) {
     }
   };
 
-  const onSend = async (product, cad) => {
-    const storage = getStorage(); //Storage itself
+  const onSend = async (product) => {
+    // const storage = getStorage(); //Storage itself
 
-    const refe = ref(storage, "images/".concat(cad, ".jpg")); //how the image will be addressed inside the storage
+    // const refe = ref(storage, "images/".concat(cad, ".jpg")); //how the image will be addressed inside the storage
 
-    const img = await fetch(resultado);
-    const bytes = await img.blob();
+    // const img = await fetch(resultado);
+    // const bytes = await img.blob();
 
-    await uploadBytes(refe, bytes); // upload image
+    // await uploadBytes(refe, bytes); // upload image
     await addDoc(collection(database, "productos"), product);
   };
 
   //Image-----------------------
-  const [image, setImage] = useState("");
-  const [resultado, setResultado] = useState();
-
   useEffect(() => {
     (async () => {
       if (Platform.OS !== "web") {
@@ -224,7 +215,6 @@ export default function CRUDScreen({ navigation }) {
         .catch((err) =>{
           console.log(err)
         })
-      setExistChanges(true)
     }
   };
 
@@ -261,13 +251,13 @@ export default function CRUDScreen({ navigation }) {
           value={price}
           onChangeText={setPrice}
         />
-        <View style={{ flex: 2, flexDirection: "row", alignSelf: "center" }}>
+        <View style={{ flex: 2, flexDirection: "row" }}>
           <Checkbox
             status={isAvailable ? "checked" : "unchecked"}
             onPress={() => {
               setAvailable(!isAvailable);
             }}
-            color="#00cfeb"
+            color="#4ade80"
           />
           <Text style={{ alignSelf: "center" }}>Disponible</Text>
         </View>
@@ -280,8 +270,8 @@ export default function CRUDScreen({ navigation }) {
             Cargar Imagen
           </Text>
         </TouchableOpacity>
-        {image !== null ? (
-          <Image source={{ uri: image }} style={{ width: 100, height: 100, justifyContent:"align-center" }} />
+        {image !== "" ? (
+          <Image source={{ uri: image }} style={{ width: 100, height: 100, alignSelf: "center" }} />
         ) : null}
         {/*Contenedor para horario*/}
         <View
@@ -373,7 +363,7 @@ export default function CRUDScreen({ navigation }) {
               onPress={() => {
                 setSelectionMa(!isSelectedMa);
               }}
-              color="#00cfeb"
+              color="#4ade80"
             />
             <Text style={{ alignSelf: "center" }}>Martes</Text>
             <Checkbox
