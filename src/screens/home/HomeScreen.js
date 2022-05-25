@@ -41,7 +41,6 @@ export default function Home({ navigation}) {
     let auxFav = false;
     if (favorites.length != 0) {
       if (favorites.lastIndexOf(item.id) != -1){
-        console.log(item.name)
         auxFav = true;
       }  
     }
@@ -80,8 +79,10 @@ export default function Home({ navigation}) {
   const filterProducts = (filter) =>{
     setRefresh(true)
     setProductos(productosData.filter((i) =>{
-      if(i.name.lastIndexOf(filter) != -1)
+      if(i.name.toUpperCase().lastIndexOf(filter.toUpperCase()) != -1){
+        console.log(i.name)
         return true
+      }
       return false
     }))
     setRefresh(false)
@@ -98,14 +99,18 @@ export default function Home({ navigation}) {
         {/* <HeaderTabs /> */}
         <SearchBar
           placeholder="Realiza una busqueda..."
-          onChangeText={filterProducts}
+          placeholderTextColor={"white"}
+          onChangeText={(e) =>{setFilter(e); filterProducts(e)}}
           value={filterT}
           lightTheme={true}
           round={true}
           containerStyle={{borderRadius:10}}
           // inputContainerStyle={{color:"red", fontSize:30}}
-          // inputStyle={{color:"red", fontSize:30}}
-          onClear={onRefresh}
+          inputStyle={{color:"white", fontSize:20}}
+          onCancel={() =>{
+            setFilter("")
+            onRefresh()
+          }}
           clearIcon={
             <Icon
               type='ionicon'
