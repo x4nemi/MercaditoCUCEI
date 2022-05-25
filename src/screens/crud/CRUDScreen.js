@@ -72,10 +72,11 @@ export default function CRUDScreen({ navigation }) {
   const [isSelectedJ, setSelectionJ] = useState(false);
   const [isSelectedV, setSelectionV] = useState(false);
   const [isSelectedS, setSelectionS] = useState(false);
+
   const [isAvailable, setAvailable] = useState(false);
 
   const [flag, setFlag] = useState(true);
-  const [image, setImage] = useState("");
+  const [cadena, setCadena] = useState("");
 
   const handleValidationProduct = () => {
     if (
@@ -90,7 +91,8 @@ export default function CRUDScreen({ navigation }) {
       productName == "" ||
       description == "" ||
       price == "" ||
-      places == ""
+      places == "" ||
+      image == ""
     ) {
       alert("No puedes dejar vacío");
       console.log("No puedes dejar vacío");
@@ -140,23 +142,27 @@ export default function CRUDScreen({ navigation }) {
 
       const p = places;
 
+      console.log(image);
+      setCadena(makeid(5));
+      const cadeena = makeid(5);
+      console.log(cadena);
+
       const productAux = {
         name: productName,
         description: description,
         price: price,
+        image: cadeena.concat(".jpg"),
         location: p,
         available: isAvailable,
         days: selectionedDays,
         initial_hour: hourInitial + ":" + initialMinute,
         final_hour: hourFinal + ":" + finalMinute,
         user_id: auth.currentUser.uid,
-        user_name: auth.currentUser.displayName,
-        image:image
       };
 
       console.log(productAux);
       if (flag) {
-        onSend(productAux);
+        onSend(productAux, cadeena);
         alert("Se ha enviado el producto!");
         navigation.navigate("Home");
       } else {
@@ -165,11 +171,22 @@ export default function CRUDScreen({ navigation }) {
     }
   };
 
-  const onSend = async (product) => {
+  const onSend = async (product, cad) => {
+    const storage = getStorage(); //Storage itself
+
+    const refe = ref(storage, "images/".concat(cad, ".jpg")); //how the image will be addressed inside the storage
+
+    const img = await fetch(resultado);
+    const bytes = await img.blob();
+
+    await uploadBytes(refe, bytes); // upload image
     await addDoc(collection(database, "productos"), product);
   };
 
   //Image-----------------------
+  const [image, setImage] = useState("");
+  const [resultado, setResultado] = useState();
+
   useEffect(() => {
     (async () => {
       if (Platform.OS !== "web") {
@@ -192,24 +209,31 @@ export default function CRUDScreen({ navigation }) {
     console.log(result);
     if (!result.cancelled) {
       setImage(result.uri);
-      const storage = getStorage(); //Storage itself
+      setResultado(result);
+      console.log(image);
+      // const storage = getStorage(); //Storage itself
 
-      const direction = "images/" + auth.currentUser.displayName + parseInt(Math.floor(Math.random() * 50));
-      const refe = ref(storage, direction); //how the image will be addressed inside the storage
+      // const cadena = makeid(10);
+      // const refe = ref(storage, "images/".concat(cadena, ".jpg")); //how the image will be addressed inside the storage
 
-      const img = await fetch(result.uri);
-      const bytes = await img.blob();
+      // const img = await fetch(result.uri);
+      // const bytes = await img.blob();
 
-      await uploadBytes(refe, bytes); // upload image
-      getDownloadURL(ref(storage,direction))
-        .then((url) =>{
-          setImage(url)
-        })
-        .catch((err) =>{
-          console.log(err)
-        })
+      // await uploadBytes(refe, bytes); // upload image
     }
   };
+
+  //función para poner una cadena con carácteres aleatorios
+  function makeid(length) {
+    var result = "";
+    var characters =
+      "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+    var charactersLength = characters.length;
+    for (var i = 0; i < length; i++) {
+      result += characters.charAt(Math.floor(Math.random() * charactersLength));
+    }
+    return result;
+  }
 
   return (
     <ScrollView style={{ backgroundColor: "white" }}>
@@ -245,7 +269,7 @@ export default function CRUDScreen({ navigation }) {
         {/* <Text>
             {productName} {price} {description}
           </Text> */}
-        {/*Cargar imagen */}
+        {/*Cargar imagen en proceso */}
         <TouchableOpacity style={styles.button} onPress={pickImage}>
           <Text style={{ color: "black", fontWeight: "600" }}>
             Cargar Imagen
@@ -344,7 +368,7 @@ export default function CRUDScreen({ navigation }) {
               onPress={() => {
                 setSelectionMa(!isSelectedMa);
               }}
-              color="#4ade80"
+              color="#00cfeb"
             />
             <Text style={{ alignSelf: "center" }}>Martes</Text>
             <Checkbox
@@ -387,7 +411,6 @@ export default function CRUDScreen({ navigation }) {
           <TextInput
             onChangeText={(places) => setPlaces(places)}
             style={styles.input}
-            placeholder="Separa lugares por comas"
           />
           {/*Botón para agregar horario*/}
           <Text>{product.name}</Text>
