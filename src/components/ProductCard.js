@@ -15,6 +15,28 @@ import { updateFavorite } from "../services/favorites/FavoriteServices";
 
 const ProductCard = ({ item, onPress, backgroundColor, isFav, onStore }) => {
   const[fav,setFav] = useState(isFav)
+  
+  
+
+  const checkDay = () => {
+    let days = item.days
+    let today =  new Date().getDay()
+    if(days.lastIndexOf("Lunes") != -1 && today == 1)
+      return true
+    if(days.lastIndexOf("Martes") != -1 && today == 2)
+      return true
+    if(days.lastIndexOf("Miercoles") != -1 && today == 3)
+      return true
+    if(days.lastIndexOf("Jueves") != -1 && today == 4)
+      return true
+    if(days.lastIndexOf("Viernes") != -1 && today == 5)
+      return true
+    if(days.lastIndexOf("Sabado") != -1 && today == 6)
+      return true
+    return false
+  }
+
+  const isDay = checkDay()
   return (
     <View style={boxes.main}>
       {/*Card*/}
@@ -42,7 +64,7 @@ const ProductCard = ({ item, onPress, backgroundColor, isFav, onStore }) => {
                 </View>
                 <View style={{ paddingHorizontal: 5 }}>
                   <Text style={boxes.disponibility}>
-                    {item.available == true ? "Disponible" : "Agotado"}
+                    {(item.available == true && isDay) ? "Disponible" : "No Disponible"}
                   </Text>
                 </View>
                 {!onStore && <View style={{ paddingHorizontal: 5 }}>
