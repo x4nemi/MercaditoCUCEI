@@ -11,7 +11,7 @@ import ProductScreen from "../product/ProductScreen";
 import { getProducts } from "../../services/product/ProductServices";
 import { getFavorites } from "../../services/favorites/FavoriteServices";
 import { ref } from "firebase/storage";
-import { async } from "@firebase/util";
+import GestureRecognizer from "react-native-swipe-gestures";
 
 const initProduct = {
   name: "",
@@ -81,46 +81,49 @@ export default function Home({ navigation}) {
   }, []);
   //Render Home
   return (
+      <GestureRecognizer style={{flex:1}}
+        onSwipeDown={onRefresh}>
     <ScrollView style={{ backgroundColor: "#eee", flex: 1 }}>
-      <View style={{ backgroundColor: "white", padding: 15 }}>
-        {/* <HeaderTabs /> */}
-        <BuscarBar />
-      </View>
-      {/*Listas no deben estar denro de un scroll view */}
-      <View
-        showsVerticalScrollIndicator={false}
-        style={{ backgroundColor: "#eee" }}
-      >
-        <Text
-          style={{
-            fontSize: 30,
-            fontWeight: "bold",
-            color: "#44403c",
-            alignSelf: "center",
-            padding: 20,
-          }}
+        <View style={{ backgroundColor: "white", padding: 15 }}>
+          {/* <HeaderTabs /> */}
+          <BuscarBar />
+        </View>
+        {/*Listas no deben estar denro de un scroll view */}
+        <View
+          showsVerticalScrollIndicator={false}
+          style={{ backgroundColor: "#eee" }}
         >
-          Bienvenido a Mercadito CUCEI
-        </Text>
-        <FlatList
-          data={productosData}
-          renderItem={renderCard}
-          keyExtractor={(item) => item.id}
-          refreshControl={
-            <RefreshControl
-              refreshing={refresh}
-              onRefresh={onRefresh}
-            />
-          }
-        />
-      </View>
+          <Text
+            style={{
+              fontSize: 30,
+              fontWeight: "bold",
+              color: "#44403c",
+              alignSelf: "center",
+              padding: 20,
+            }}
+          >
+            Bienvenido a Mercadito CUCEI
+          </Text>
+          <FlatList
+            data={productosData}
+            renderItem={renderCard}
+            keyExtractor={(item) => item.id}
+            refreshControl={
+              <RefreshControl
+                refreshing={refresh}
+                onRefresh={onRefresh}
+              />
+            }
+          />
+        </View>
       {openModal && (
         <ProductScreen
-          item={product}
-          visible={openModal}
-          onClose={onModalClose}
+        item={product}
+        visible={openModal}
+        onClose={onModalClose}
         />
-      )}
+        )}
     </ScrollView>
+        </GestureRecognizer>
   );
 }
