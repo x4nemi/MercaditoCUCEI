@@ -6,6 +6,7 @@ import { useState, useEffect, useCallback } from "react";
 import BuscarBar from "../../components/SearchBar";
 import ProductCard from "../../components/ProductCard";
 import ProductScreen from "../product/ProductScreen";
+import { SearchBar } from "@rneui/themed";
 
 //Product Service
 import { getProducts } from "../../services/product/ProductServices";
@@ -28,6 +29,7 @@ export default function Home({ navigation}) {
 
   const [openModal, setOpenModal] = useState(false);
   const[refresh,setRefresh] = useState(false)
+  const[filter,setFilter] = useState("")
 
   async function fetchProducts() {
     setProductos(await getProducts());
@@ -68,22 +70,38 @@ export default function Home({ navigation}) {
     setOpenModal(false);
   };
 
+  //Refresh Handler
   const onRefresh = async () =>{
     setRefresh(true)
     setProductos(await getProducts())
     setRefresh(false)
   }
 
+  const filterProducts = (filter) =>{
+    setRefresh(true)
+    setProductos(productosData.filter((i) =>{
+      if(i.name.lastIndexOf(filter) != -1)
+        return true
+      return false
+    }))
+    setRefresh(false)
+  }
   
   useEffect(async () => {
     await fetchProducts();
   }, []);
+
   //Render Home
   return (
     <View style={{ backgroundColor: "#eee", flex: 1,  marginTop: StatusBar.currentHeight || 0, }}>
       <View style={{ backgroundColor: "white", padding: 15 }}>
         {/* <HeaderTabs /> */}
-        <BuscarBar />
+        <SearchBar
+          placeholder="Realiza una busqueda..."
+          onChangeText={filterProducts}
+          value={filter}
+          lightTheme={true}
+        />
       </View>
       {/*Listas no deben estar denro de un scroll view */}
       <View
