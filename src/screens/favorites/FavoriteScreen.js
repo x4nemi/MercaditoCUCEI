@@ -1,4 +1,4 @@
-import { View, Text, SafeAreaView, ScrollView, FlatList } from "react-native";
+import { View, Text, SafeAreaView, ScrollView, FlatList, RefreshControl } from "react-native";
 import {useState, useEffect, useCallback} from "react";
   
   //Productos
@@ -23,6 +23,8 @@ import {useState, useEffect, useCallback} from "react";
 const FavScreen = ({ navigation }) => {
     const [productosData, setProductos] = useState([]);
     const [favorites, setFavorites] = useState(initFavorites);
+    const[refresh,setRefresh] = useState(false)
+
   
     const [product, setProduct] = useState(initProduct);
   
@@ -51,6 +53,13 @@ const FavScreen = ({ navigation }) => {
         );
       }
     };
+
+    const onRefresh = async () =>{
+      setRefresh(true)
+      setProductos(await getProducts())
+      setFavorites(await getFavorites())
+      setRefresh(false)
+    }
   
     //Card Press
     const onCardPress = () => {
@@ -83,11 +92,20 @@ const FavScreen = ({ navigation }) => {
               fontWeight: "bold",
               color: "#44403c",
               alignSelf: "center",
+              padding: 20,
             }}
+            onPress={onRefresh}
           >
             Favoritos
           </Text>
           <FlatList
+            refreshControl={
+            <RefreshControl
+              enabled={true}
+              refreshing={refresh}
+              onRefresh={onRefresh}
+            />
+            }
             data={productosData}
             renderItem={renderCard}
             keyExtractor={(item) => item.id}

@@ -94,7 +94,7 @@ export default function Home({ navigation}) {
 
   //Render Home
   return (
-    <View style={{ backgroundColor: "#eee", flex: 1,  marginTop: StatusBar.currentHeight || 0, }}>
+    <View style={{ backgroundColor: "#eee", flex: 1,  marginTop: StatusBar.currentHeight || 20, }}>
       <View style={{ backgroundColor: "white", padding: 15 }}>
         {/* <HeaderTabs /> */}
         <SearchBar

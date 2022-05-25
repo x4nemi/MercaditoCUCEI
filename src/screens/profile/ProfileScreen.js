@@ -98,7 +98,7 @@ function ProfileScreen() {
     <ScrollView style={styles.main}>
       {/*Header*/}
       <View style={styles.header}>
-        <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+        <View style={{flexDirection: 'row', justifyContent: 'space-between',padding:20,}}>
           <View style={{marginLeft: 10}}>
             <TouchableOpacity style={[styles.button, { marginRight: 10 }]}>
               <Text onPress={pickImage} style={styles.buttonText}>
@@ -124,7 +124,7 @@ function ProfileScreen() {
             }}
             style={styles.profilePicture}
           />
-          <Text style={{ fontWeight: "600", fontSize: 30 }}>
+          <Text style={{ fontWeight: "600", fontSize: 30, padding: 5 }}>
             {currentUser.displayName ?? "Usuario"}
           </Text>
         </View>

@@ -56,7 +56,7 @@ function Panels({ navigation }) {
 
           if (rn === "Home") {
             iconName = focused ? "home" : "home-outline";
-          } else if (rn === "CRUD") {
+          } else if (rn === "Creación") {
             iconName = focused ? "add-circle" : "add-circle-outline";
           } else if (rn === "Tienda") {
             iconName = focused ? "briefcase" : "briefcase-outline";
@@ -83,7 +83,7 @@ function Panels({ navigation }) {
       <Tab.Screen name={"Home"} component={HomeScreen} />
       <Tab.Screen name={"Fav"} component={FavScreen} />
       <Tab.Screen
-        name={"CRUD"}
+        name={"Creación"}
         component={CRUDScreen}
         options={{ headerShown: true }}
       />
@@ -98,7 +98,7 @@ export default function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator
-        initialRouteName={"Panels"}
+        initialRouteName={"Login"}
         screenOptions={({ route }) => ({
           headerShown: false,
         })}

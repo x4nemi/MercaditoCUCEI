@@ -44,7 +44,13 @@ export default function LoginScreen() {
   //Sign Up
   const handleCreateAccount = async () => {
     let userId;
-    createUserWithEmailAndPassword(auth, email, password)
+    const correo = email;
+    if (/^([\w.-]+)@(\[(\d{1,3}\.){3}|(?!alumnos.udg)(([a-zA-Z\d-]+\.)+))([a-zA-Z]{2,4}|\d{1,3})(\]?)$/.test(correo)){
+      alert("Sólo correo institucional!");
+    }
+    else{
+      // Código de que sí está bien
+      createUserWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         console.log("Se ha creado la cuenta (-:");
         alert("Se ha creado la cuenta con exito!");
@@ -58,6 +64,7 @@ export default function LoginScreen() {
       .catch((error) => {
         console.log(error);
       });
+    }
   };
 
   //Sign In
