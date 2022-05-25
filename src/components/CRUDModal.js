@@ -148,7 +148,7 @@ export default function CRUDModal({ item, visible, onClose }) {
 
       const p = location;
 
-      const productAux = {
+      let productAux = {
         name: productName,
         description: description,
         price: price,
@@ -160,8 +160,10 @@ export default function CRUDModal({ item, visible, onClose }) {
         id: item.id,
         user_id: auth.currentUser.uid,
         user_name: auth.currentUser.displayName,
-        image:image
       };
+      if(image != ""){
+        productAux = {...productAux,image:image}
+      }
       if (flag) {
         onSubmit(productAux);
         alert("Se han enviado los cambios al producto");
@@ -236,10 +238,12 @@ export default function CRUDModal({ item, visible, onClose }) {
 
   const onSubmit = async (product) => {
     await updateP(product);
+    navigation.navigate("Home");
   };
 
   const onDelete = async () =>{
     await deleteP(item)
+    navigation.navigate("Home");
   }
 
   const closeRequest = () => {

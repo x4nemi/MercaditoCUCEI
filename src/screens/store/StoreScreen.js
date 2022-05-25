@@ -89,7 +89,7 @@ const Store = ({ navigation }) => {
       </View>
       {/*Botones Añadir y Eliminar*/}
       <View style={{ marginBottom: 10 }}>
-        <TouchableHighlight style={styles.button} onPress={() => navigation.navigate("CRUD")}>
+        <TouchableHighlight style={styles.button} onPress={() => navigation.navigate("Creación")}>
           <View>
             <Text style={{ fontSize: 18 }}>Añadir Producto</Text>
           </View>
