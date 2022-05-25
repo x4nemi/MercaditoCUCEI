@@ -97,6 +97,7 @@ export default function Home({ navigation}) {
             fontWeight: "bold",
             color: "#44403c",
             alignSelf: "center",
+            padding: 20,
           }}
         >
           Bienvenido a Mercadito CUCEI

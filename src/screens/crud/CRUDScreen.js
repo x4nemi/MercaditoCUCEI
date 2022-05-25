@@ -251,9 +251,9 @@ export default function CRUDScreen({ navigation }) {
             Cargar Imagen
           </Text>
         </TouchableOpacity>
-        {image && (
-          <Image source={{ uri: image }} style={{ width: 100, height: 100, alignSelf:"center" }} />
-        )}
+        {image !== null ? (
+          <Image source={{ uri: image }} style={{ width: 100, height: 100 }} />
+        ) : null}
         {/*Contenedor para horario*/}
         <View
           style={{
