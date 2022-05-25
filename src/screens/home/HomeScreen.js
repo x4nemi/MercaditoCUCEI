@@ -1,5 +1,5 @@
 //Refresh en la FlatList
-import { View, Text, SafeAreaView, ScrollView, FlatList, RefreshControl } from "react-native";
+import { View, Text, SafeAreaView, ScrollView, FlatList, RefreshControl, StatusBar } from "react-native";
 import { useState, useEffect, useCallback } from "react";
 
 //Imports
@@ -80,28 +80,32 @@ export default function Home({ navigation}) {
   }, []);
   //Render Home
   return (
-    <ScrollView style={{ backgroundColor: "#eee", flex: 1 }}>
+    <View style={{ backgroundColor: "#eee", flex: 1,  marginTop: StatusBar.currentHeight || 0, }}>
       <View style={{ backgroundColor: "white", padding: 15 }}>
         {/* <HeaderTabs /> */}
         <BuscarBar />
       </View>
       {/*Listas no deben estar denro de un scroll view */}
       <View
-        showsVerticalScrollIndicator={false}
-        style={{ backgroundColor: "#eee" }}
+        style={{ backgroundColor: "#eee", marginBottom:5 }}
       >
-        <Text
-          style={{
-            fontSize: 30,
-            fontWeight: "bold",
-            color: "#44403c",
-            alignSelf: "center",
-            padding: 20,
-          }}
-        >
-          Bienvenido a Mercadito CUCEI
-        </Text>
+          <Text
+            style={{
+              fontSize: 30,
+              fontWeight: "bold",
+              color: "#44403c",
+              alignSelf: "center",
+              padding: 20,
+            }}
+          >
+            Bienvenido a Mercadito CUCEI
+          </Text>
+      </View>
+      <ScrollView
+        style={{ backgroundColor: "#eee", marginTop:2 }}
+      >
         <FlatList
+          scrollEnabled={true}
           data={productosData}
           renderItem={renderCard}
           keyExtractor={(item) => item.id}
@@ -113,7 +117,7 @@ export default function Home({ navigation}) {
             />
           }
         />
-      </View>
+      </ScrollView>
       {openModal && (
         <ProductScreen
           item={product}
@@ -121,6 +125,6 @@ export default function Home({ navigation}) {
           onClose={onModalClose}
         />
       )}
-    </ScrollView>
+    </View>
   );
 }
