@@ -8,6 +8,7 @@ import {
   TextInput,
   SafeAreaView,
   Modal,
+  Platform,
 } from "react-native";
 import { useEffect, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
@@ -15,12 +16,13 @@ import { useNavigation } from "@react-navigation/native";
 import { Checkbox } from "react-native-paper";
 import GestureRecognizer from "react-native-swipe-gestures";
 import RNPickerSelect from "react-native-picker-select";
+import * as ImagePicker from "expo-image-picker";
 
 import { firebaseConfig } from "../../firebase-config";
 import { getFirestore } from "firebase/firestore";
-import { collection, addDoc } from "firebase/firestore";
 import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
+import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 
 import { updateP } from "../services/product/ProductServices";
 
@@ -55,7 +57,6 @@ const initProduct = {
 };
 
 export default function CRUDModal({ item, visible, onClose }) {
-  console.log(item.id);
   const navigation = useNavigation();
   //Inputs
   const [product, setProduct] = useState(item);
@@ -82,6 +83,7 @@ export default function CRUDModal({ item, visible, onClose }) {
   const [visibility, setVisibility] = useState(visible);
 
   const [flag, setFlag] = useState(true);
+  const [image, setImage] = useState("");
 
   const handleValidationProduct = () => {
     if (
@@ -158,6 +160,7 @@ export default function CRUDModal({ item, visible, onClose }) {
         id: item.id,
         user_id: auth.currentUser.uid,
         user_name: auth.currentUser.displayName,
+        image:image
       };
       if (flag) {
         onSubmit(productAux);
@@ -167,6 +170,48 @@ export default function CRUDModal({ item, visible, onClose }) {
       } else {
         setFlag(true);
       }
+    }
+  };
+
+  //Image-----------------------
+  useEffect(() => {
+    (async () => {
+      if (Platform.OS !== "web") {
+        const { status } =
+          await ImagePicker.requestMediaLibraryPermissionsAsync();
+        if (status !== "granted") {
+          alert("Requerimos los permisos para hacer esto funcionar");
+        }
+      }
+    })();
+  }, []);
+
+  const pickImage = async () => {
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
+    });
+    console.log(result);
+    if (!result.cancelled) {
+      setImage(result.uri);
+      const storage = getStorage(); //Storage itself
+
+      const direction = "images/" + auth.currentUser.displayName + parseInt(Math.floor(Math.random() * 50));
+      const refe = ref(storage, direction); //how the image will be addressed inside the storage
+
+      const img = await fetch(result.uri);
+      const bytes = await img.blob();
+
+      await uploadBytes(refe, bytes); // upload image
+      getDownloadURL(ref(storage,direction))
+        .then((url) =>{
+          setImage(url)
+        })
+        .catch((err) =>{
+          console.log(err)
+        })
     }
   };
 
@@ -201,6 +246,7 @@ export default function CRUDModal({ item, visible, onClose }) {
   useEffect(() => {
     handleItem(item);
   }, []);
+
   return (
     <ScrollView style={{ backgroundColor: "white" }}>
       <GestureRecognizer
@@ -257,8 +303,8 @@ export default function CRUDModal({ item, visible, onClose }) {
             {/* <Text>
                 {productName} {price} {description}
               </Text> */}
-            {/*Cargar imagen en proceso */}
-            <TouchableOpacity style={styles.button}>
+            {/*Cargar imagen */}
+            <TouchableOpacity style={styles.button} onPress={pickImage}>
               <Text style={{ color: "black", fontWeight: "600" }}>
                 Cargar Imagen
               </Text>

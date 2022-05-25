@@ -13,7 +13,7 @@ import { Checkbox } from "react-native-paper";
 import { useState } from "react";
 import RNPickerSelect from "react-native-picker-select";
 import * as ImagePicker from "expo-image-picker";
-import { getStorage, ref, uploadBytes } from "firebase/storage";
+import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
 import { getFirestore } from "firebase/firestore";
 import { collection, addDoc } from "firebase/firestore";
 import { initializeApp } from "firebase/app";
@@ -72,10 +72,10 @@ export default function CRUDScreen({ navigation }) {
   const [isSelectedJ, setSelectionJ] = useState(false);
   const [isSelectedV, setSelectionV] = useState(false);
   const [isSelectedS, setSelectionS] = useState(false);
-
   const [isAvailable, setAvailable] = useState(false);
 
   const [flag, setFlag] = useState(true);
+  const [image, setImage] = useState("");
 
   const handleValidationProduct = () => {
     if (
@@ -151,6 +151,7 @@ export default function CRUDScreen({ navigation }) {
         final_hour: hourFinal + ":" + finalMinute,
         user_id: auth.currentUser.uid,
         user_name: auth.currentUser.displayName,
+        image:image
       };
 
       console.log(productAux);
@@ -169,7 +170,6 @@ export default function CRUDScreen({ navigation }) {
   };
 
   //Image-----------------------
-  const [image, setImage] = useState("");
   useEffect(() => {
     (async () => {
       if (Platform.OS !== "web") {
@@ -195,12 +195,19 @@ export default function CRUDScreen({ navigation }) {
       const storage = getStorage(); //Storage itself
 
       const direction = "images/" + auth.currentUser.displayName + parseInt(Math.floor(Math.random() * 50));
-      const refe = ref(storage, "direction"); //how the image will be addressed inside the storage
+      const refe = ref(storage, direction); //how the image will be addressed inside the storage
 
       const img = await fetch(result.uri);
       const bytes = await img.blob();
 
       await uploadBytes(refe, bytes); // upload image
+      getDownloadURL(ref(storage,direction))
+        .then((url) =>{
+          setImage(url)
+        })
+        .catch((err) =>{
+          console.log(err)
+        })
     }
   };
 
@@ -238,7 +245,7 @@ export default function CRUDScreen({ navigation }) {
         {/* <Text>
             {productName} {price} {description}
           </Text> */}
-        {/*Cargar imagen en proceso */}
+        {/*Cargar imagen */}
         <TouchableOpacity style={styles.button} onPress={pickImage}>
           <Text style={{ color: "black", fontWeight: "600" }}>
             Cargar Imagen
