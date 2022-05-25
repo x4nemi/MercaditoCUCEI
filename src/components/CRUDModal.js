@@ -24,7 +24,7 @@ import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 
-import { updateP } from "../services/product/ProductServices";
+import { updateP, deleteP } from "../services/product/ProductServices";
 
 const app = initializeApp(firebaseConfig);
 const database = getFirestore(app);
@@ -215,7 +215,7 @@ export default function CRUDModal({ item, visible, onClose }) {
     }
   };
 
-  const handleItem = (item) => {
+  const handleDayCheck = (item) => {
     let d = item.days;
     d.forEach((day) => {
       if (day == "Lunes") setSelectionL(true);
@@ -238,13 +238,17 @@ export default function CRUDModal({ item, visible, onClose }) {
     await updateP(product);
   };
 
+  const onDelete = async () =>{
+    await deleteP(item)
+  }
+
   const closeRequest = () => {
     setVisibility(!visibility);
     onClose();
   };
 
   useEffect(() => {
-    handleItem(item);
+    handleDayCheck(item);
   }, []);
 
   return (
@@ -453,12 +457,20 @@ export default function CRUDModal({ item, visible, onClose }) {
               />
               {/*Botón para agregar horario*/}
             </View>
-            <TouchableOpacity
-              style={styles.button}
-              onPress={handleValidationProduct}
-            >
-              <Text style={{ fontWeight: "600" }}>Editar Producto</Text>
-            </TouchableOpacity>
+            <View style={{flex:2, flexDirection:"row", justifyContent:"space-evenly"}}>
+              <TouchableOpacity
+                style={styles.button}
+                onPress={handleValidationProduct}
+              >
+                <Text style={{ fontWeight: "600" }}>Editar Producto</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={styles.button}
+                onPress={onDelete}
+              >
+                <Text style={{ fontWeight: "600" }}>Eliminar Producto</Text>
+              </TouchableOpacity>
+            </View>
             {/* <TouchableOpacity
                 style={{
                   width: 250,

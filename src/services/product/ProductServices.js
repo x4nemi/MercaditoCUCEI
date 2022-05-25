@@ -1,6 +1,6 @@
 import { initializeApp } from "firebase/app";
 import { firebaseConfig } from "../../../firebase-config";
-import { collection, getDocs, updateDoc, doc } from "firebase/firestore";
+import { collection, getDocs, updateDoc, doc, deleteDoc } from "firebase/firestore";
 import { getFirestore } from "firebase/firestore";
 //Iinitalize app
 const app = initializeApp(firebaseConfig);
@@ -29,4 +29,9 @@ export async function updateP(item){
   const p = doc(db,"productos",item.id)
   await updateDoc(p,item)
   console.log("Updated Product!")
+}
+
+export async function deleteP(item){
+  await deleteDoc(doc(db,"productos",item.id))
+  alert("Se elimino un producto con exito!");
 }
