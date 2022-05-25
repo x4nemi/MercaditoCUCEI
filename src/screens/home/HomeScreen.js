@@ -3,15 +3,14 @@ import { View, Text, SafeAreaView, ScrollView, FlatList, RefreshControl, StatusB
 import { useState, useEffect, useCallback } from "react";
 
 //Imports
-import BuscarBar from "../../components/SearchBar";
 import ProductCard from "../../components/ProductCard";
 import ProductScreen from "../product/ProductScreen";
-import { SearchBar } from "@rneui/themed";
+import { SearchBar, Icon } from "@rneui/themed";
 
 //Product Service
 import { getProducts } from "../../services/product/ProductServices";
 import { getFavorites } from "../../services/favorites/FavoriteServices";
-import { ref } from "firebase/storage";
+import MaterialCommunityIcons from "react-native-vector-icons/Ionicons";
 
 const initProduct = {
   name: "",
@@ -29,7 +28,7 @@ export default function Home({ navigation}) {
 
   const [openModal, setOpenModal] = useState(false);
   const[refresh,setRefresh] = useState(false)
-  const[filter,setFilter] = useState("")
+  const[filterT,setFilter] = useState("")
 
   async function fetchProducts() {
     setProductos(await getProducts());
@@ -73,6 +72,7 @@ export default function Home({ navigation}) {
   //Refresh Handler
   const onRefresh = async () =>{
     setRefresh(true)
+    setFilter("")
     setProductos(await getProducts())
     setRefresh(false)
   }
@@ -99,8 +99,26 @@ export default function Home({ navigation}) {
         <SearchBar
           placeholder="Realiza una busqueda..."
           onChangeText={filterProducts}
-          value={filter}
+          value={filterT}
           lightTheme={true}
+          round={true}
+          containerStyle={{borderRadius:10}}
+          // inputContainerStyle={{color:"red", fontSize:30}}
+          // inputStyle={{color:"red", fontSize:30}}
+          onClear={onRefresh}
+          clearIcon={
+            <Icon
+              type='ionicon'
+              name="close-sharp"
+              onPress={onRefresh}
+            />
+          }
+          searchIcon={
+            <Icon
+              type='ionicon'
+              name="search-sharp"
+            />
+          }
         />
       </View>
       {/*Listas no deben estar denro de un scroll view */}
