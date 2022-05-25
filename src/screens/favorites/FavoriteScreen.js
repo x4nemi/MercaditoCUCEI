@@ -1,5 +1,5 @@
 import { View, Text, SafeAreaView, ScrollView, FlatList } from "react-native";
-  import {useState, useEffect, useCallback} from "react";
+import {useState, useEffect, useCallback} from "react";
   
   //Productos
   import ProductCard from "../../components/ProductCard";

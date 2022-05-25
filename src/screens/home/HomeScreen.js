@@ -1,6 +1,6 @@
 //Refresh en la FlatList
-import { View, Text, SafeAreaView, ScrollView, FlatList } from "react-native";
-import { useState, useEffect } from "react";
+import { View, Text, SafeAreaView, ScrollView, FlatList, RefreshControl } from "react-native";
+import { useState, useEffect, useCallback } from "react";
 
 //Imports
 import BuscarBar from "../../components/SearchBar";
@@ -10,6 +10,8 @@ import ProductScreen from "../product/ProductScreen";
 //Product Service
 import { getProducts } from "../../services/product/ProductServices";
 import { getFavorites } from "../../services/favorites/FavoriteServices";
+import { ref } from "firebase/storage";
+import { async } from "@firebase/util";
 
 const initProduct = {
   name: "",
@@ -26,10 +28,12 @@ export default function Home({ navigation}) {
   const [product, setProduct] = useState(initProduct);
 
   const [openModal, setOpenModal] = useState(false);
+  const[refresh,setRefresh] = useState(false)
 
   async function fetchProducts() {
     setProductos(await getProducts());
     setFavorites(await getFavorites());
+    setRefresh(false)
   }
 
   //Render Card(Cambiar on Press a Detalles wdel producto)
@@ -37,6 +41,7 @@ export default function Home({ navigation}) {
     let auxFav = false;
     if (favorites.length != 0) {
       if (favorites.lastIndexOf(item.id) != -1){
+        console.log(item.name)
         auxFav = true;
       }  
     }
@@ -63,6 +68,12 @@ export default function Home({ navigation}) {
   const onModalClose = () => {
     setOpenModal(false);
   };
+
+  const onRefresh = async () =>{
+    setRefresh(true)
+    setProductos(await getProducts())
+    setRefresh(false)
+  }
 
   
   useEffect(async () => {
@@ -94,6 +105,12 @@ export default function Home({ navigation}) {
           data={productosData}
           renderItem={renderCard}
           keyExtractor={(item) => item.id}
+          refreshControl={
+            <RefreshControl
+              refreshing={refresh}
+              onRefresh={onRefresh}
+            />
+          }
         />
       </View>
       {openModal && (

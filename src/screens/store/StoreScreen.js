@@ -8,7 +8,7 @@ import {
   StatusBar,
   Button,
   TouchableHighlight,
-  Modal
+  RefreshControl
 } from "react-native";
 import { useState, useEffect } from "react";
 import BuscarBar from "../../components/SearchBar";
@@ -19,6 +19,7 @@ import ProductoCard from "../../components/ProductCard";
 //Product Service
 import { getProducts } from "../../services/product/ProductServices";
 import CRUDModal from "../../components/CRUDModal";
+import { getAuth} from "firebase/auth";
 
 const initProduct = {
   name: "",
@@ -33,8 +34,11 @@ const initProduct = {
 };
 
 const Store = ({ navigation }) => {
+  const auth = getAuth()
+  const userId = auth.currentUser.uid
   async function fetchProducts() {
     setProductos(await getProducts());
+    setRefresh(false);
   }
 
   const [productosData, setProductos] = useState([]);
@@ -42,21 +46,23 @@ const Store = ({ navigation }) => {
 
   const [selectedProduct, setSelectedProduct] = useState();
   const [openCRUD, setOpenCRUD] = useState(false);
+  const[refresh,setRefresh] = useState(false);
 
   //Render Card(Cambiar onPress a Editar Producto)
   const renderCard = ({ item }) => {
-    const backgroundColor = item.id === selectedId ? "#d1d5db" : "white";
-    return (
-      <ProductoCard
-        item={{...item,id:item.id}}
-        onPress={() => {
-          setSelectedProduct(item);
-          onCardPress();
-        }}
-        backgroundColor={{ backgroundColor }}
-        onStore={true}
-      />
-    );
+    if(item.user_id == userId){
+      return (
+        <ProductoCard
+          item={{...item,id:item.id}}
+          onPress={() => {
+            setSelectedProduct(item);
+            onCardPress();
+          }}
+          backgroundColor={{ backgroundColor:"#d1d5db" }}
+          onStore={true}
+        />
+      );
+    }
   };
 
   const onCardPress = () => {
@@ -65,6 +71,11 @@ const Store = ({ navigation }) => {
 
   const onCRUDClose = () =>{
     setOpenCRUD(false)
+  }
+
+  const onRefresh = async () =>{
+    setRefresh(true);
+    await fetchProducts();
   }
 
   useEffect(async () => {
@@ -102,6 +113,12 @@ const Store = ({ navigation }) => {
           renderItem={renderCard}
           keyExtractor={(item) => item.id}
           extraData={selectedId}
+          refreshControl={
+            <RefreshControl
+              refreshing={refresh}
+              onRefresh={onRefresh}
+            />
+          }
         />
       </View>
       {openCRUD &&

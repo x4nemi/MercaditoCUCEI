@@ -45,7 +45,7 @@ const ProductCard = ({ item, onPress, backgroundColor, isFav, onStore }) => {
           {/*Card Info*/}
           <View style={{ flexDirection: "row", flex: 1 }}>
             {/*Imagen*/}
-            <Image source={item.image} style={boxes.image} />
+            <Image source={{uri:item.image}} style={boxes.image} />
             {/*Info del Producto */}
             <View style={{ flexDirection: "column", flex: 1 }}>
               {/*Iconos e Info */}

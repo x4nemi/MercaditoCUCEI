@@ -58,7 +58,7 @@ const ProductScreen = ({ item, visible, onClose }) => {
               <View style={styles.imgContainer}>
                 <Image
                   style={styles.img}
-                  source={require("../../assets/store.png")}
+                  source={{uri:item.image}}
                 />
               </View>
               <View style={{ flexDirection: "row", justifyContent: "space-between", }}>
