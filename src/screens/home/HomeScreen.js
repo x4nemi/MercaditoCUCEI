@@ -1,5 +1,5 @@
 //Refresh en la FlatList
-import { View, Text, SafeAreaView, ScrollView, FlatList, RefreshControl, StatusBar } from "react-native";
+import { View, Text, SafeAreaView, ScrollView, FlatList, RefreshControl, StatusBar, TouchableOpacity } from "react-native";
 import { useState, useEffect, useCallback } from "react";
 
 //Imports
@@ -89,17 +89,19 @@ export default function Home({ navigation}) {
       <View
         style={{ backgroundColor: "#eee", marginBottom:5 }}
       >
-          <Text
+        <TouchableOpacity>
+          <Text onPress={onRefresh}
             style={{
               fontSize: 30,
               fontWeight: "bold",
               color: "#44403c",
               alignSelf: "center",
               padding: 20,
-            }}
-          >
+              alignContent:"center",
+            }}>
             Bienvenido a Mercadito CUCEI
           </Text>
+        </TouchableOpacity>
       </View>
       <ScrollView
         style={{ backgroundColor: "#eee", marginTop:2 }}
