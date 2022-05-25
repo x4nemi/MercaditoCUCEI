@@ -86,7 +86,6 @@ const Store = ({ navigation }) => {
     <ScrollView style={styles.container}>
       {/* Header */}
       <View style={{ backgroundColor: "white", padding: 15 }}>
-        <BuscarBar />
       </View>
       {/*Botones Añadir y Eliminar*/}
       <View style={{ marginBottom: 10 }}>

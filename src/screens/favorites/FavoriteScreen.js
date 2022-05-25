@@ -71,8 +71,6 @@ const FavScreen = ({ navigation }) => {
     return (
       <ScrollView style={{ backgroundColor: "#eee", flex: 1 }}>
         <View style={{ backgroundColor: "white", padding: 15 }}>
-          {/* <HeaderTabs /> */}
-          <BuscarBar />
         </View>
         {/*Listas no deben estar denro de un scroll view */}
         <View
