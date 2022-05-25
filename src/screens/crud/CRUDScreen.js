@@ -174,6 +174,7 @@ export default function CRUDScreen({ navigation }) {
 
     // await uploadBytes(refe, bytes); // upload image
     await addDoc(collection(database, "productos"), product);
+    resetForm()
   };
 
   //Image-----------------------
@@ -230,6 +231,10 @@ export default function CRUDScreen({ navigation }) {
     return result;
   }
 
+  const resetForm = ()=> {
+    setProduct(initProduct)
+  }
+  
   return (
     <ScrollView style={{ backgroundColor: "white" }}>
       <View style={styles.container}>

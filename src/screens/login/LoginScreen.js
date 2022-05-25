@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   TextInput,
   Button,
+  Linking,
 } from "react-native";
 import React from "react";
 import { BlurView } from "expo-blur";
@@ -46,13 +47,13 @@ export default function LoginScreen() {
     createUserWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         console.log("Se ha creado la cuenta (-:");
-        alert("Se ha creado la cuenta con exito!")
+        alert("Se ha creado la cuenta con exito!");
         navigation.navigate("Login");
-        userId = userCredential.user.uid
-        createFavorite(userId)
-        let at = email.lastIndexOf("@")
-        let aux = email.slice(0,at)
-        updateU(email,password,aux,userCredential.user)
+        userId = userCredential.user.uid;
+        createFavorite(userId);
+        let at = email.lastIndexOf("@");
+        let aux = email.slice(0, at);
+        updateU(email, password, aux, userCredential.user);
       })
       .catch((error) => {
         console.log(error);
@@ -72,7 +73,6 @@ export default function LoginScreen() {
         alert("Datos invalidos");
         console.log(error);
       });
-    
   };
 
   const toAviso = () => {
@@ -83,7 +83,8 @@ export default function LoginScreen() {
   return (
     <View style={styles.container}>
       <Image
-        backgroundColor blu
+        backgroundColor
+        blu
         source={{ uri: wallpaper }}
         style={[styles.image, StyleSheet.absoluteFill]}
       />
@@ -98,8 +99,16 @@ export default function LoginScreen() {
       >
         <BlurView intensity={40}>
           <View style={styles.login}>
-            <Image source={require("../../assets/logo2.png")} 
-            style={styles.profilePicture} />
+            <Text
+              style={{ color: "blue", justifyContent: "space-between" }}
+              onPress={() => Linking.openURL("mailto:mercaditocucei@gmail.com")}
+            >
+              ¿Necesitas ayuda?
+            </Text>
+            <Image
+              source={require("../../assets/logo2.png")}
+              style={styles.profilePicture}
+            />
 
             <View>
               <Text style={{ fontSize: 17, fontWeight: "400", color: "white" }}>
@@ -173,7 +182,7 @@ const styles = StyleSheet.create({
     borderRadius: 50,
     borderColor: "white",
     marginVertical: 10,
-    resizeMode : "center",
+    resizeMode: "center",
   },
 
   input: {
