@@ -198,7 +198,7 @@ export default function CRUDModal({ item, visible, onClose }) {
       setImage(result.uri);
       const storage = getStorage(); //Storage itself
 
-      const direction = "images/" + auth.currentUser.displayName + parseInt(Math.floor(Math.random() * 50));
+      const direction = "images/" + auth.currentUser.displayName + parseInt(Math.floor(Math.random() * 5000));
       const refe = ref(storage, direction); //how the image will be addressed inside the storage
 
       const img = await fetch(result.uri);
@@ -262,7 +262,7 @@ export default function CRUDModal({ item, visible, onClose }) {
           transparent={true}
           visible={visibility}
           onRequestClose={closeRequest}
-          presentationStyle="pageSheet"
+          presentationStyle="formSheet"
           animationType="slide"
         >
           <View style={styles.container}>

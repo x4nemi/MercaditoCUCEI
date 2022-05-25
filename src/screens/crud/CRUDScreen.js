@@ -10,7 +10,7 @@ import {
   Platform,
 } from "react-native";
 import { Checkbox } from "react-native-paper";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import RNPickerSelect from "react-native-picker-select";
 import * as ImagePicker from "expo-image-picker";
 import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
@@ -19,7 +19,6 @@ import { collection, addDoc } from "firebase/firestore";
 import { initializeApp } from "firebase/app";
 import { firebaseConfig } from "../../../firebase-config";
 import { getAuth } from "firebase/auth";
-import { useEffect } from "react";
 
 const app = initializeApp(firebaseConfig);
 const database = getFirestore();
@@ -209,17 +208,23 @@ export default function CRUDScreen({ navigation }) {
     console.log(result);
     if (!result.cancelled) {
       setImage(result.uri);
-      setResultado(result);
-      console.log(image);
-      // const storage = getStorage(); //Storage itself
+      const storage = getStorage(); //Storage itself
 
-      // const cadena = makeid(10);
-      // const refe = ref(storage, "images/".concat(cadena, ".jpg")); //how the image will be addressed inside the storage
+      const direction = "images/" + auth.currentUser.displayName + parseInt(Math.floor(Math.random() * 500));
+      const refe = ref(storage, direction); //how the image will be addressed inside the storage
 
-      // const img = await fetch(result.uri);
-      // const bytes = await img.blob();
+      const img = await fetch(result.uri);
+      const bytes = await img.blob();
 
-      // await uploadBytes(refe, bytes); // upload image
+      await uploadBytes(refe, bytes); // upload image
+      getDownloadURL(ref(storage,direction))
+        .then((url) =>{
+          setImage(url)
+        })
+        .catch((err) =>{
+          console.log(err)
+        })
+      setExistChanges(true)
     }
   };
 
@@ -276,7 +281,7 @@ export default function CRUDScreen({ navigation }) {
           </Text>
         </TouchableOpacity>
         {image !== null ? (
-          <Image source={{ uri: image }} style={{ width: 100, height: 100 }} />
+          <Image source={{ uri: image }} style={{ width: 100, height: 100, justifyContent:"align-center" }} />
         ) : null}
         {/*Contenedor para horario*/}
         <View

@@ -1,4 +1,4 @@
-import { useState, Alert } from "react";
+import { useState, useEffect } from "react";
 import { useNavigation } from "@react-navigation/native";
 import {
   View,
@@ -10,10 +10,14 @@ import {
   TextInput,
   ScrollView,
   SafeAreaView,
+  Platform,
 } from "react-native";
 
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { updateU } from "../../services/user/UserService";
+
+import * as ImagePicker from "expo-image-picker";
+import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
 
 function ProfileScreen() {
   //Auth
@@ -27,6 +31,8 @@ function ProfileScreen() {
 
   const [existChanges, setExistChanges] = useState(false);
   const [showCancel, setShowCancel] = useState(false);
+  const [image, setImage] = useState("");
+
   const navigation = useNavigation();
 
   //On Press Cancel Button
@@ -43,14 +49,50 @@ function ProfileScreen() {
     navigation.navigate("Login");
   };
   
-  // Should upload a picture PENDING*****
-  const UploadPicture = () => {
-    console.log("Upload Profile Picture");
-    // alert.apply("Upload Profile Picture");
-    // auth.signOut();
-    // navigation.navigate("Login");
-  };
   
+   //Image-----------------------
+  useEffect(() => {
+    (async () => {
+      if (Platform.OS !== "web") {
+        const { status } =
+          await ImagePicker.requestMediaLibraryPermissionsAsync();
+        if (status !== "granted") {
+          alert("Requerimos los permisos para hacer esto funcionar");
+        }
+      }
+    })();
+  }, []);
+
+  const pickImage = async () => {
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
+    });
+    console.log(result);
+    if (!result.cancelled) {
+      setImage(result.uri);
+      const storage = getStorage(); //Storage itself
+
+      const direction = "images/" + auth.currentUser.displayName + parseInt(Math.floor(Math.random() * 500));
+      const refe = ref(storage, direction); //how the image will be addressed inside the storage
+
+      const img = await fetch(result.uri);
+      const bytes = await img.blob();
+
+      await uploadBytes(refe, bytes); // upload image
+      getDownloadURL(ref(storage,direction))
+        .then((url) =>{
+          setImage(url)
+        })
+        .catch((err) =>{
+          console.log(err)
+        })
+      setExistChanges(true)
+    }
+  };
+
 
   return (
     <ScrollView style={styles.main}>
@@ -59,7 +101,7 @@ function ProfileScreen() {
         <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
           <View style={{marginLeft: 10}}>
             <TouchableOpacity style={[styles.button, { marginRight: 10 }]}>
-              <Text onPress={UploadPicture} style={styles.buttonText}>
+              <Text onPress={pickImage} style={styles.buttonText}>
                 Sube tu Foto
               </Text>
             </TouchableOpacity>
@@ -77,7 +119,7 @@ function ProfileScreen() {
         <View style={styles.container}>
           <Image
             source={{
-              uri: "https://i.pinimg.com/originals/51/f6/fb/51f6fb256629fc755b8870c801092942.png",
+              uri: auth.currentUser.photoURL,
             }}
             style={styles.profilePicture}
           />
@@ -148,7 +190,7 @@ function ProfileScreen() {
           <TouchableOpacity
             disabled={!existChanges}
             onPress={() => {
-              updateU(email, password, name, auth.currentUser);
+              updateU(email, password, name, image,auth.currentUser);
               LogOut();
               navigation.navigate("Login");
             }}
